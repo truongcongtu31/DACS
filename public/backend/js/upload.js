@@ -26,6 +26,10 @@ var loadBlog = function (event) {
     var output = $("#img_showblog");
     output.attr('src', URL.createObjectURL(event.target.files[0]));
 };
+var loadAbout = function (event) {
+    var output = $("#img_showabout");
+    output.attr('src', URL.createObjectURL(event.target.files[0]));
+};
 //
 // // Upload file image product
 // $('#upload_product').change(function () {

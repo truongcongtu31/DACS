@@ -22,53 +22,56 @@
                                     <p class="card-description">
 
                                     </p>
-                                    @foreach ($aboutDetail as $item)
+                                    @if ($aboutDetail)
                                         <form class="forms-sample"
-                                              action="{{ route('about.post-edit',['id'=>$item->id]) }} " method="post"
-                                              enctype="multipart/form-data">
+                                            action="{{ route('about.post-edit', ['id' => $aboutDetail->id]) }} "
+                                            method="post" enctype="multipart/form-data">
                                             @csrf
 
                                             <div class="form-group">
                                                 <label for="exampleInputName1">Title</label>
                                                 <input type="text" class="form-control" id="exampleInputName1"
-                                                       placeholder="Title"
-                                                       name="title" value="{{ old('title') ?? $item->title }}"/>
+                                                    placeholder="Title" name="title"
+                                                    value="{{ old('title') ?? $aboutDetail->title }}" />
                                                 @error('title')
-                                                <li style="font-size: 12px;color: red ">{{ $message }}</li>
+                                                    <li style="font-size: 12px;color: red ">{{ $message }}</li>
                                                 @enderror
                                             </div>
+
                                             <div class="form-group">
                                                 <label for="exampleInputName1">Content</label>
-                                                <textarea class="form-control" id="content" placeholder="Content"
-                                                          name="content">
-                                    {{ old('content') ?? $item->content }} </textarea>
+                                                <textarea class="form-control" id="content" placeholder="Content" name="content">
+                                                    {{ old('content') ?? $aboutDetail->content }} </textarea>
                                                 @error('content')
-                                                <li style="font-size: 12px;color: red ">{{ $message }}</li>
+                                                    <li style="font-size: 12px;color: red ">{{ $message }}</li>
                                                 @enderror
                                             </div>
+
                                             <div class="form-outline mb-4">
                                                 <label class="form-label" for="form2Example2">Image About</label>
-                                                <input type="file" id="uploadabout" name="uploadabout"
-                                                       class="form-control">
-                                                <div class="image-show" id="img_showabout">
+                                                <input type="file" id="uploadabout" name="uploadabout" class="form-control"
+                                                    onchange="loadAbout(event)">
+                                                <div class="image-show">
+                                                    <img id="img_showabout" style="width: 180px"
+                                                        src="{{ $aboutDetail->image }}">
+                                                    <input type="hidden" name="about" id="hinhanhabout"
+                                                        value="{{ $aboutDetail->image }}">
                                                 </div>
                                                 <br>
-                                                <input type="hidden" name="about" id="hinhanhabout"
-                                                       value="{{ $item->image }}">
-                                                <img src="{{ $item->image }}" alt="" id="img_oldabout"
-                                                     style="width: 200px;height: 100px">
+
                                                 @error('uploadabout')
-                                                <li style="font-size: 12px;color: red ">{{ $message }}</li>
+                                                    <li style="font-size: 12px;color: red ">{{ $message }}</li>
                                                 @enderror
                                             </div>
-                                            @endforeach
                                             <button type="submit" class="btn btn-primary ">Submit</button>
 
                                             <button class="btn btn-light" style="color: black"><a
-                                                        style="text-decoration: none;"
-                                                        href="{{ route('listabout') }}">Cancel</a></button>
+                                                    style="text-decoration: none;"
+                                                    href="{{ route('listabout') }}">Cancel</a>
+                                            </button>
 
                                         </form>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -82,7 +85,19 @@
 @section('js-custom')
     <script>
         ClassicEditor
+            .create(document.querySelector('#description'))
+            .catch(error => {
+                console.error(error);
+            });
+
+        ClassicEditor
             .create(document.querySelector('#content'))
+            .catch(error => {
+                console.error(error);
+            });
+
+        ClassicEditor
+            .create(document.querySelector('#content1'))
             .catch(error => {
                 console.error(error);
             });

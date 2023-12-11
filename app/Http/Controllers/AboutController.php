@@ -25,18 +25,17 @@ class AboutController extends Controller
         return $this->about->addAbout($request);
     }
 
-    public function edit(Request $request, $id = 0)
-    {
-        if (!empty($id)) {
-            $aboutDetail = $this->about->getDetail($id);
-            if (!empty($aboutDetail[0])) {
-                $request->session()->put('id', $id);
+    public function edit(Request $request)
+        {
+
+            $aboutDetail = $this->about->getDetail($request->id);
+            if (!empty($aboutDetail)) {
                 return view('backend.about.editabout', [
                     'aboutDetail' => $aboutDetail,
                 ]);
             }
+
         }
-    }
 
     public function show()
     {
@@ -44,11 +43,10 @@ class AboutController extends Controller
         return view('backend.about.listabout', ['about' => $about]);
     }
 
-    public function update(Request $request)
-    {
-        $id = session('id');
-        return $this->about->updateAbout($request);
-    }
+       public function update(Request $request)
+       {
+           return $this->about->updateAbout($request);
+       }
 
     public function destroy($id)
     {

@@ -1,4 +1,5 @@
 @extends('backend.master')
+
 @section('search')
     <li class="nav-item">
         <form class="search-form" action="#">
@@ -8,6 +9,7 @@
     </li>
 @endsection
 @section('content')
+
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
@@ -24,35 +26,37 @@
                                         <div class="form-group">
                                             <label for="exampleInputName1">Title</label>
                                             <input type="text" class="form-control" id="exampleInputName1"
-                                                   placeholder="Title" name="title"
-                                                   value="{{ old('title') }}"/>
+                                                placeholder="Title" name="title" value="{{ old('title') }}" />
                                             @error('title')
-                                            <li style="font-size: 12px;color: red ">{{ $message }}</li>
+                                                <li style="font-size: 12px;color: red ">{{ $message }}</li>
                                             @enderror
                                         </div>
+
                                         <div class="form-group">
                                             <label for="exampleInputName1">Content</label>
-                                            <textarea name="content" placeholder="Content" id="content" cols="1000"
-                                                      rows="10">{{ old('content') }}</textarea>
+                                            <textarea name="content" placeholder="Content" id="content" cols="1000" rows="10">{{ old('content') }}</textarea>
+
                                             @error('content')
-                                            <li style="font-size: 12px;color: red ">{{ $message }}</li>
+                                                <li style="font-size: 12px;color: red ">{{ $message }}</li>
                                             @enderror
                                         </div>
+
 
                                         <div class="form-group">
                                             <label class="form-label" for="form2Example2">Image About</label>
-                                            <input type="file" id="uploadabout" name="uploadabout" class="form-control">
-                                            <div class="image-show" id="img_showabout">
+                                            <input type="file" id="uploadabout" name="uploadabout" class="form-control"
+                                                onchange="loadAbout(event)">
+                                            <div class="image-show pt-2">
+                                                <img style="width: 180px" id="img_showabout" src="">
                                             </div>
-                                            <input type="hidden" name="about" id="hinhanhabout">
                                             @error('uploadabout')
-                                            <li style="font-size: 12px;color: red ">{{ $message }}</li>
+                                                <li style="font-size: 12px;color: red ">{{ $message }}</li>
                                             @enderror
                                         </div>
 
-                                        <button type="submit" class="btn btn-primary ">Submit</button>
+                                        <button type="submit" class="btn btn-primary text-white">Submit</button>
                                         <button class="btn btn-light"><a style="text-decoration: none;"
-                                                                         href="{{ route('listabout') }}">Cancel</a>
+                                                href="{{ route('listabout') }}">Cancel</a>
                                         </button>
 
                                     </form>
@@ -68,7 +72,19 @@
 @section('js-custom')
     <script>
         ClassicEditor
+            .create(document.querySelector('#description'))
+            .catch(error => {
+                console.error(error);
+            });
+
+        ClassicEditor
             .create(document.querySelector('#content'))
+            .catch(error => {
+                console.error(error);
+            });
+
+        ClassicEditor
+            .create(document.querySelector('#content1'))
             .catch(error => {
                 console.error(error);
             });

@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+
 
 
 class About extends Model
@@ -21,43 +25,74 @@ class About extends Model
         return $about;
     }
 
-    public function addAbout($data)
-    {
-        return About::create($data);
-    }
+     public function addAbout(Request $request)
+        {
+           $validator = Validator::make($request->all(), [
+                            'title' => 'required|string|max:55',
+                            'content' => 'required',
+                            'uploadabout' => 'required|image|max:2048|mimes:jpeg,png,jpg,gif'
+                        ]);
+                        if ($validator->fails()) {
+                            return redirect()->back()->withErrors($validator);
+                        } else {
+                            $about = new About();
+                            $about->title = $request->input('title');
+                            $about->content = $request->input('content');
+                            if ($request->hasFile('uploadabout')) {
+                                $file = $request->file('uploadabout');
+                                $extension = $file->getClientOriginalExtension();
+                                $filename = time() . '.' . $extension;
+                                $path = 'uploads/about';
+                                $file->move(public_path($path), $filename);
+                                $about->image = $path . '/' . $filename;
+                            }
+                            $result = $about->save();
+                            if ($result) {
+                                return redirect()->route('listabout')->with('success', "Add about success!");
+                            }
+                        }
+        }
+
 
     public function getDetail($id)
-    {
-        $aboutDetail = DB::table('abouts')
-            ->select('id', 'title', 'content', 'image')
-            ->where('id', '=', $id)
-            ->get();
+       {
+           return About::find($id);
+       }
 
-        return $aboutDetail;
-    }
 
-    public function updateAbout($request, $id)
-    {
-        $file = $request->file('hinhanh5');
-        if ($file != null) {
-            return DB::table('abouts')
-                ->where('id', '=', $id)
-                ->update([
-                    'title' => $request->input('title'),
-                    'content' => $request->input('content'),
-                    'updated_at' => date('Y-m-d H:i:s')
-                ]);
-        } else {
-            return DB::table('abouts')
-                ->where('id', '=', $id)
-                ->update([
-                    'title' => $request->input('title'),
-                    'content' => $request->input('content'),
-                    'image' => $request->input('hinhanh5'),
-                    'updated_at' => date('Y-m-d H:i:s')
-                ]);
+    public function updateAbout($request)
+        {
+            $validator = Validator::make($request->all(), [
+                'title' => 'required|string|max:55',
+                'content' => 'required',
+                'uploadabout' => 'image|max:2048|mimes:jpeg,png,jpg,gif'
+            ]);
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator);
+            } else {
+                $about = About::find($request->id);
+                $about->title = $request->title;
+                $about->content = $request->input('content');
+                if ($request->file('uploadabout') !== null) {
+                    if ($request->hasFile('uploadabout')) {
+                        $file = $request->file('uploadabout');
+                        $name = $file->getClientOriginalExtension();
+                        $filename = time() . '.' . $name;
+                        $path = 'uploads/about';
+                        $file->move(public_path($path), $filename);
+                        $about->image = $path . '/' . $filename;
+                    }
+                } else {
+                    $about->image = $request->about;
+                }
+                $result = $about->save();
+                if ($result) {
+                    return redirect()->route('listabout')->with('success', "Update to about Success!");
+                } else {
+                    return redirect()->route('listabout')->with('error', "Failed to update about!");
+                }
+            }
         }
-    }
 
     public function deleteAbout($id)
     {

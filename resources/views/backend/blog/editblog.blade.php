@@ -67,7 +67,7 @@
                                             </div>
                                             <div class="form-outline mb-4">
                                                 <label class="form-label" for="form2Example2">Image Blog</label>
-                                                <input type="file" id="uploadblog" class="form-control"
+                                                <input type="file" id="uploadblog" name="uploadblog" class="form-control"
                                                        onchange="loadBlog(event)">
                                                 <div class="image-show">
                                                     <img id="img_showblog" style="width: 180px"

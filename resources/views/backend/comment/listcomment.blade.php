@@ -50,7 +50,7 @@
                                                             {!! $item->email !!}
                                                         </td>
                                                         <td style="max-width: 200px !important; overflow: hidden !important; text-overflow: ellipsis !important;">{!! $item->content !!}
-                                                        <td style="max-width: 200px !important; overflow: hidden !important; text-overflow: ellipsis !important;">{!! $item->blog_id !!}
+                                                        <td style="max-width: 200px !important; overflow: hidden !important; text-overflow: ellipsis !important;">{!! $item->blog->title !!}
 
                                                         <td style="text-align: center">
                                                             {{ $item->created_at }}

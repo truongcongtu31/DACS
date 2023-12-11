@@ -40,12 +40,12 @@
                                         <h4 class="p-b-15">
                                             <a href="{{route('blog-detail',['id'=>$value->id])}}"
                                                class="ltext-108 cl2 hov-cl1 trans-04">
-                                                {{$value->title}}
+                                                {!!$value->title!!}
                                             </a>
                                         </h4>
 
                                         <p class="stext-117 cl6">
-                                            {{$value->description}}
+                                            {!!$value->description!!}
                                         </p>
 
                                         <div class="flex-w flex-sb-m p-t-18">

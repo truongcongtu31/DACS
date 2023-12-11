@@ -18,7 +18,7 @@
             </a>
 
             <span class="stext-109 cl4">
-                {{$blog->title}}
+                {!!$blog->title!!}
             </span>
         </div>
     </div>
@@ -60,7 +60,7 @@
                             </span>
 
                             <h4 class="ltext-109 cl2 p-b-28">
-                                {{$blog->title}}
+                                {!!$blog->title!!}
                             </h4>
 
                             <p class="stext-117 cl6 p-b-26">
@@ -68,7 +68,7 @@
                             </p>
 
                             <p class="stext-117 cl6 p-b-26">
-                                {{$blog->content}}
+                                {!!$blog->content!!}
                             </p>
                         </div>
 

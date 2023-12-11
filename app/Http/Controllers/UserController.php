@@ -82,8 +82,9 @@ class UserController extends Controller
 
     public function getAbout()
     {
-        $menus = $this->menu->getAllMenu();
-        return view('frontend.about', compact('menus'));
+                $abouts = $this->about->getAllAbout();
+               $menus = $this->menu->getAllMenu();
+               return view('frontend.about', compact('menus','abouts'));
     }
 
     public function getCart()

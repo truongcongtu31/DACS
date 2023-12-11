@@ -85,7 +85,6 @@
                                         </table>
                                         <br>
                                         <div class="d-flex justify-content-end">
-                                            {{ $category->links() }}
                                         </div>
                                     </div>
                                 </div>

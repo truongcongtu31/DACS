@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\Validator;
 class Comment extends Model
 {
     use HasFactory;
-
+public function blog()
+    {
+        return $this->belongsTo(Blog::class, 'blog_id');
+    }
     protected $guarded = [];
 
     public function addComment(Request $request)
