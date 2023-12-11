@@ -60,7 +60,7 @@ class OrderController extends Controller
     public function showOrderDetail(Request $request)
     {
         $orderDetail = $this->orderdetail->getOrderByOrderId($request->id);
-        $output = view('frontend.order.modal-order', compact('orderDetail'))->render();
+        $output = view('frontend.order.modal-order', compact('orderDetail'))->toHtml();
         return response()->json(['html' => $output]);
     }
 

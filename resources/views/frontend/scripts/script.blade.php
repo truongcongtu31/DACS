@@ -428,7 +428,9 @@
             },
             success: function (response) {
                 console.log(response);
-                if (response.status === 400) {
+                if (response.status === 403) {
+                    window.location = "{{route('login')}}";
+                } else if (response.status === 400) {
                     swal('Error', 'Purchase is required to comment', 'error')
                 } else if (response.status === 0) {
                     $.each(response.error, function (prefix, val) {
@@ -510,23 +512,17 @@
         });
     }
 
-
-</script>
-
-<script>
-    $('.js-hide-modal1').on('click', function () {
-        $('.js-modal').removeClass('show-modal1');
-    });
+    //Order
     $(document).on('click', '.modal-detail-order', function (e) {
         e.preventDefault();
-        $('.js-modal').addClass('show-modal1');
+        $("#exampleModalCenter").modal("show");
         $.ajax({
             type: 'GET',
             url: "{{route('order.detail.show')}}" + "/" + $(this).data('id'),
             data: $(this).data('id'),
             success: function (data) {
                 console.log(data);
-                $('#modal-order').html(data.html)
+                $('#modal-order').html(data.html);
             }
         });
     })

@@ -24,10 +24,11 @@
             <div class="container">
                 @include('aleart')
             </div>
+            @include('frontend.assets.main-order')
             <div id="modal-order">
                 @include('frontend.order.modal-order')
             </div>
-            @include('frontend.assets.main-order')
+
         </div>
     </div>
 

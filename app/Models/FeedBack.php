@@ -34,7 +34,7 @@ class FeedBack extends Model
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string'],
             'email' => ['required', 'email'],
-            'star' => ['required', 'integer'],
+            'star' => ['required', 'integer', 'min:1'],
             'content' => ['required', 'string'],
             'product_id' => ['required', 'integer']
         ]);
@@ -43,9 +43,11 @@ class FeedBack extends Model
             return response()->json(['status' => 0, 'error' => $validator->errors()->toArray()]);
         }
 
+        if (!Auth::check()) {
+            return response()->json(['status' => 403]);
+        }
         $user = Auth::user();
         $orders = $user->orders;
-
         foreach ($orders as $order) {
             if ($order->status === "received") {
                 $orderDetails = $this->order->getOrderByOrderId($order->id);

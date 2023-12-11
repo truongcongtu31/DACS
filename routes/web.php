@@ -72,10 +72,7 @@ Route::prefix('user')->group(function () {
     Route::get('/search', [ProductController::class, 'searchProduct'])->name('shop.search');
     Route::get('/product-detail', [ProductController::class, 'showProductDetail'])->name('product-detail');
     Route::get('/feedback-ajax', [FeedbackController::class, 'showFeedbackAjax'])->name('feedback.show');
-    Route::middleware(['auth', 'role:user'])->group(function () {
-        Route::post('/add-feedback', [FeedbackController::class, 'store'])->name('feedback.add');
-    });
-
+    Route::post('/add-feedback', [FeedbackController::class, 'store'])->name('feedback.add');
     Route::get('/blog', [UserController::class, 'getBlog'])->name('blog');
     Route::get('/blog-detail/{id}', [UserController::class, 'getBlogDetail'])->name('blog-detail');
     Route::get('/show-comment-ajax', [CommentController::class, 'showCommentAjax'])->name('show-comment-ajax');
@@ -90,15 +87,15 @@ Route::prefix('user')->group(function () {
     Route::get('/get-cart', [CartController::class, 'getCart'])->name('get-cart');
 
 
-    //Order
-    Route::middleware(['auth', 'role:user', 'verified'])->prefix('order')->group(function () {
-        Route::post('/check-out-order', [OrderController::class, 'addOrder'])->name('check-out');
-        Route::get('/', [OrderController::class, 'showOrder'])->name('order-show');
-        Route::post('/order/delete/{id?}', [OrderController::class, 'destroy'])->name('order.delete');
-        Route::post('/order/status/{id?}', [OrderController::class, 'changeStatus'])->name('order.status');
-        Route::get('/order-detail/{id?}', [OrderController::class, 'showOrderDetail'])->name('order.detail.show');
-    });
+});
 
+//Order
+Route::middleware(['auth', 'role:user', 'verified'])->prefix('order')->group(function () {
+    Route::post('/check-out-order', [OrderController::class, 'addOrder'])->name('check-out');
+    Route::get('/', [OrderController::class, 'showOrder'])->name('order-show');
+    Route::post('/order/delete/{id?}', [OrderController::class, 'destroy'])->name('order.delete');
+    Route::post('/order/status/{id?}', [OrderController::class, 'changeStatus'])->name('order.status');
+    Route::get('/order-detail/{id?}', [OrderController::class, 'showOrderDetail'])->name('order.detail.show');
 });
 
 

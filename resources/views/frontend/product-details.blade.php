@@ -255,7 +255,7 @@
                                                 Your email address will not be published. Required fields are marked *
                                             </p>
 
-                                            <div class="flex-w flex-m p-t-50 p-b-23">
+                                            <div class="flex-w flex-m p-t-50 p-b-10">
                                                 <span class="stext-102 cl3 m-r-16">
                                                     Your Rating
                                                 </span>
@@ -273,6 +273,7 @@
                                                     <input id="rating" class="dis-none" type="number" name="rating">
                                                 </span>
                                             </div>
+                                            <span class="text-danger error-text star_error"></span>
 
                                             <div class="row p-b-25">
                                                 <div class="col-12 p-b-5">
