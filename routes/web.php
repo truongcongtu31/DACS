@@ -72,7 +72,10 @@ Route::prefix('user')->group(function () {
     Route::get('/search', [ProductController::class, 'searchProduct'])->name('shop.search');
     Route::get('/product-detail', [ProductController::class, 'showProductDetail'])->name('product-detail');
     Route::get('/feedback-ajax', [FeedbackController::class, 'showFeedbackAjax'])->name('feedback.show');
-    Route::post('/add-feedback', [FeedbackController::class, 'store'])->name('feedback.add');
+    Route::middleware(['auth', 'role:user'])->group(function () {
+        Route::post('/add-feedback', [FeedbackController::class, 'store'])->name('feedback.add');
+    });
+
     Route::get('/blog', [UserController::class, 'getBlog'])->name('blog');
     Route::get('/blog-detail/{id}', [UserController::class, 'getBlogDetail'])->name('blog-detail');
     Route::get('/show-comment-ajax', [CommentController::class, 'showCommentAjax'])->name('show-comment-ajax');
@@ -85,28 +88,24 @@ Route::prefix('user')->group(function () {
     Route::get('delete-cart', [CartController::class, 'deleteCart'])->name('delete-cart');
     Route::get('/get-modal-cart', [CartController::class, 'getModalCart'])->name('get-modal-cart');
     Route::get('/get-cart', [CartController::class, 'getCart'])->name('get-cart');
-    Route::post('/check-out-order', [OrderController::class, 'addOrder'])->name('check-out');
-    Route::get('/order', [OrderController::class, 'showOrder'])->name('order-show');
-    Route::post('/order/delete/{id?}', [OrderController::class, 'destroy'])->name('order.delete');
-    Route::post('/order/status/{id?}', [OrderController::class, 'changeStatus'])->name('order.status');
-    Route::get('/order-detail/{id?}', [OrderController::class, 'showOrderDetail'])->name('order.detail.show');
-})->middleware(['auth', 'role:user']);
+
+
+    //Order
+    Route::middleware(['auth', 'role:user', 'verified'])->prefix('order')->group(function () {
+        Route::post('/check-out-order', [OrderController::class, 'addOrder'])->name('check-out');
+        Route::get('/', [OrderController::class, 'showOrder'])->name('order-show');
+        Route::post('/order/delete/{id?}', [OrderController::class, 'destroy'])->name('order.delete');
+        Route::post('/order/status/{id?}', [OrderController::class, 'changeStatus'])->name('order.status');
+        Route::get('/order-detail/{id?}', [OrderController::class, 'showOrderDetail'])->name('order.detail.show');
+    });
+
+});
 
 
 //Admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::prefix('/admin')->group(function () {
 
-        //admin/upload
-//        Route::prefix('/upload')->group(function () {
-//            Route::post('/service', [UploadController::class, 'cUpload']);
-//            Route::post('/slides', [UploadController::class, 'cUploadSlide']);
-//            Route::post('/products', [UploadController::class, 'cUploadProduct']);
-//            Route::post('/abouts', [UploadController::class, 'cUploadAbout']);
-//            Route::post('/banners', [UploadController::class, 'cUploadBanner']);
-//            Route::post('/blogs', [UploadController::class, 'cUploadBlog']);
-//
-//        });
         Route::get('/', [AdminController::class, 'index'])->name('homeAdmin');
 
         //admin/products

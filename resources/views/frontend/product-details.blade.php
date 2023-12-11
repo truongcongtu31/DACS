@@ -82,7 +82,7 @@
                         </span>
 
                         <p class="stext-102 cl3 p-t-23">
-                            {{$product->description}}
+                            {!! $product->description !!}
                         </p>
 
                         <!--  -->
@@ -95,9 +95,10 @@
                                             <i class="fs-16 zmdi zmdi-minus"></i>
                                         </div>
 
-                                        <input class="mtext-104 cl3 txt-center num-product quantity-product-{{$product->id}} "
-                                               type="number"
-                                               name="num-product" value="1">
+                                        <input
+                                            class="mtext-104 cl3 txt-center num-product quantity-product-{{$product->id}} "
+                                            type="number"
+                                            name="num-product" value="1">
 
                                         <div data-id="{{$product->id}}"
                                              class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
@@ -106,9 +107,9 @@
                                     </div>
 
                                     <button
-                                            data-id="{{ $product->id }}"
-                                            data-url-cart="{{route('add-to-cart',['id'=>$product->id])}}"
-                                            class="add-to-cart-detail flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                                        data-id="{{ $product->id }}"
+                                        data-url-cart="{{route('add-to-cart',['id'=>$product->id])}}"
+                                        class="add-to-cart-detail flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
                                         Add to cart
                                     </button>
                                 </div>
@@ -299,7 +300,7 @@
                                             </div>
 
                                             <button
-                                                    class="btn-submit flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
+                                                class="btn-submit-feedback flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
                                                 Submit
                                             </button>
                                         </div>

@@ -14,10 +14,6 @@ class Product extends Model
 
     protected $guarded = [];
 
-    public function carts()
-    {
-        return $this->belongsTo(Cart::class);
-    }
 
     public function category()
     {
@@ -26,24 +22,17 @@ class Product extends Model
 
     public function order_details()
     {
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class, 'product_id');
     }
 
-    public function getProduct()
+    public function color()
     {
-
-        return Product::paginate(8);
+        return $this->belongsTo(Color::class, 'color_id');
     }
 
     public function getAllProduct()
     {
-        $allProduct = DB::table('products')
-            ->join('categories', 'categories.id', '=', 'products.category_id')
-            ->select("products.id", "products.name", "image", "image_detail_1", "image_detail_2", "image_detail_3", "description", "price", "quantity", "color", "category_id",)
-            ->paginate(8);
-
-
-        return $allProduct;
+        return Product::with('color')->paginate(8);
     }
 
 
@@ -61,7 +50,7 @@ class Product extends Model
     public
     function getProductDetails($idProduct)
     {
-        return Product::find($idProduct);
+        return Product::with('color')->where('id', $idProduct)->first();
     }
 
     public function getDetail($id)
@@ -71,35 +60,38 @@ class Product extends Model
 
     public function searchProduct(Request $request)
     {
-        $product = Product::where('name', 'Like', '%' . $request->search . '%')
+        return Product::where('name', 'Like', '%' . $request->search . '%')
             ->orWhere('price', 'Like', '%' . $request->search . '%')
+            ->orWhere('tag', 'Like', '%' . $request->search . '%')
             ->paginate(8);
-        return $product;
-
-
     }
 
-    public function getProductByfilter(Request $request)
+    public function getProductByFilter(Request $request)
     {
         $filterField = $request->get('filterField');
-        $filterDirection = $request->get('filterDirection');
-        $start = $request->get('start') ?? 0;
-        $end = $request->get('end') ?? 10000;
+        $filterDirection = $request->get('filterDirection', 'asc'); // Set a default value for filterDirection
+        $start = $request->get('start', 0);
+        $end = $request->get('end', 100000);
         $colors = $request->get('colors');
         $id = $request->get('id');
-        $query = Product::where('price', '>=', $start)
-            ->where('price', '<=', $end);
+
+        $query = Product::whereBetween('price', [$start, $end]);
+
         if ($id) {
-            $query = $query->where('category_id', $id);
+            $query->where('category_id', $id);
         }
+
         if ($filterField) {
-            $query = $query->orderBy($filterField, $filterDirection ?? 'asc');
+            $query->orderBy($filterField, $filterDirection);
         }
+
         if (!empty($colors)) {
-            $query = $query->where('color', $colors);
+            $query->where('color_id', $colors);
         }
+
         return $query->paginate(8);
     }
+
 
     public function addProduct(Request $request)
     {
@@ -108,6 +100,7 @@ class Product extends Model
             'price' => 'required|numeric|between:0,999999.99',
             'quantity' => 'required|integer',
             'color' => 'required',
+            'tag' => 'required',
             'upload_product' => 'required|image|max:2048|mimes:jpeg,png,jpg,gif,svg',
             'upload_product1' => 'required|image|max:2048|mimes:jpeg,png,jpg,gif,svg',
             'upload_product2' => 'required|image|max:2048|mimes:jpeg,png,jpg,gif,svg',
@@ -166,7 +159,8 @@ class Product extends Model
             $product->description = (string)$request->input('description');
             $product->price = floatval($request->input('price'));
             $product->quantity = $request->input('quantity');
-            $product->color = $request->input('color');
+            $product->color_id = $request->input('color');
+            $product->tag = $request->input('tag');
             $product->category_id = $request->input('category_id');
             $product->created_at = date('Y-m-d H:i:s');
             $result = $product->save();
@@ -188,6 +182,7 @@ class Product extends Model
             'upload_product1' => 'image|max:2048|mimes:jpeg,png,jpg,gif,svg',
             'upload_product2' => 'image|max:2048|mimes:jpeg,png,jpg,gif,svg',
             'upload_product3' => 'image|max:2048|mimes:jpeg,png,jpg,gif,svg',
+            'tag' => 'required',
             'category_id' => 'required',
         ]);
         if ($validator->fails()) {
@@ -258,7 +253,8 @@ class Product extends Model
             $product->description = (string)$request->input('description');
             $product->price = $request->input('price');
             $product->quantity = $request->input('quantity');
-            $product->color = $request->input('color');
+            $product->color_id = $request->input('color');
+            $product->tag = $request->input('tag');
             $product->category_id = $request->input('category_id');
             $product->updated_at = date('Y-m-d H:i:s');
             $result = $product->save();

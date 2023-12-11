@@ -18,6 +18,10 @@ class Blog extends Model
      * @var HigherOrderCollectionProxy|mixed|string
      */
 
+    public function comment()
+    {
+        return $this->hasMany(Blog::class, 'blog_id');
+    }
 
     public function getAllBlog()
     {

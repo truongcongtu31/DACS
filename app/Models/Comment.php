@@ -13,6 +13,16 @@ class Comment extends Model
 
     protected $guarded = [];
 
+    public function blog()
+    {
+        return $this->belongsTo(Blog::class, 'blog_id');
+    }
+
+    public function getAllComment()
+    {
+        return Comment::paginate(10);
+    }
+
     public function addComment(Request $request)
     {
         $validator = Validator::make($request->all(), [

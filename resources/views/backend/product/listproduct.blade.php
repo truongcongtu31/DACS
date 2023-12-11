@@ -58,10 +58,13 @@
                                                     Quantity
                                                 </th>
                                                 <th style="text-align: center">
+                                                    Tag
+                                                </th>
+                                                <th style="text-align: center">
                                                     Color
                                                 </th>
                                                 <th style="text-align: center">
-                                                    Category_id
+                                                    Category
                                                 </th>
 
                                                 <th colspan="2" style="text-align: center">Service</th>
@@ -94,16 +97,19 @@
                                                             {!! $item->description  !!}
                                                         </td>
                                                         <td style="text-align: center">
-                                                            {{ number_format($item->price, 0, '', '.') }} VNĐ
+                                                            ${{ number_format($item->price, 0, '', '.') }}
                                                         </td>
                                                         <td style="text-align: center">
                                                             {{ $item->quantity }}
                                                         </td>
                                                         <td style="text-align: center">
-                                                            {{ $item->color }}
+                                                            {{ $item->tag }}
                                                         </td>
                                                         <td style="text-align: center">
-                                                            {{ $item->category_id }}
+                                                            {{ $item->color->name }}
+                                                        </td>
+                                                        <td style="text-align: center">
+                                                            {{ $item->category->name }}
                                                         </td>
                                                         <td><a href="{{ route('product.edit', ['id' => $item->id]) }}"
                                                                class="btn btn-success btn-sm"><i

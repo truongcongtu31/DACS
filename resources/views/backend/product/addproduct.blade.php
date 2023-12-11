@@ -113,9 +113,30 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
+                                            <label for="exampleInputEmail3">Tag</label>
+                                            <select class="form-select" name="tag">
+                                                <option class="form-control" value="man">
+                                                    Man
+                                                </option>
+                                                <option class="form-control" value="woman">
+                                                    Woman
+                                                </option>
+                                                <option class="form-control" value="kid">
+                                                    Kid
+                                                </option>
+                                            </select>
+                                            @error('tag')
+                                            <li style="font-size: 12px;color: red ">{{ $message }}</li>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
                                             <label for="exampleInputEmail3">Color</label>
-                                            <input type="text" id="form2Example2" class="form-control" name="color"
-                                                   value="{{ old('color') }}"/>
+                                            <select class="form-select" name="color">
+                                                @foreach ($colors as $item)
+                                                    <option class="form-control" value="{{ $item->id }}">
+                                                        {{ $item->name }}</option>
+                                                @endforeach
+                                            </select>
                                             @error('color')
                                             <li style="font-size: 12px;color: red ">{{ $message }}</li>
                                             @enderror

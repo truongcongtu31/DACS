@@ -15,8 +15,10 @@ class role
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
-        if ($request->user()->role !== $role) {
-            return redirect()->back();
+        if ($request->user()->role === "admin") {
+            return $next($request);
+        } elseif ($request->user()->role !== $role) {
+            return \response()->view('auth.login');
         }
         return $next($request);
     }

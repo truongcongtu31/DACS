@@ -45,7 +45,7 @@ class UserController extends Controller
     {
         $id = $request->get('id');
         if (empty($id)) {
-            $products = $this->product->getProduct();
+            $products = $this->product->getAllProduct();
         } else {
             $products = $this->product->getProductByIdCategory($id);
         }
@@ -60,7 +60,8 @@ class UserController extends Controller
         $menus = $this->menu->getAllMenu();
         $blogs = $this->blog->getAllBlog();
         $categories = $this->category->getAllCategory();
-        return view('frontend.blog', compact('menus', 'blogs', 'categories'));
+        $products = $this->product->getLatestProduct();
+        return view('frontend.blog', compact('menus', 'blogs', 'categories', 'products'));
     }
 
     public function getBlogDetail(Request $request)
@@ -69,7 +70,8 @@ class UserController extends Controller
         $blog = $this->blog->getBlogById($request->id);
         $comments = $this->comment->getCommentById($request->id);
         $categories = $this->category->getAllCategory();
-        return view('frontend.blog-detail', compact('menus', 'blog', 'comments', 'categories'));
+        $products = $this->product->getLatestProduct();
+        return view('frontend.blog-detail', compact('menus', 'blog', 'comments', 'categories', 'products'));
     }
 
     public function getContact()

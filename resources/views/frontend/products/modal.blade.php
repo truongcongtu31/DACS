@@ -70,10 +70,12 @@
 
                         </p>
 
+                        <div class="flex-w m-r-20 stext-101 m-tb-10">
+                            <span id="tag"></span>
+                        </div>
+
                         <!--  -->
                         <div class="p-t-33">
-
-
                             <div class=" flex-w flex-r-m p-b-10">
                                 <div class="size-204 flex-w flex-m respon6-next">
                                     <div class="wrap-num-product flex-w m-r-20 m-tb-10">
@@ -87,11 +89,12 @@
                                         <div data-id="" class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
                                             <i class="fs-16 zmdi zmdi-plus"></i>
                                         </div>
+
                                     </div>
 
                                     <button
-                                            data-id=""
-                                            class="add-to-cart flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 ">
+                                        data-id=""
+                                        class="add-to-cart flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 ">
                                         Add to cart
                                     </button>
                                 </div>

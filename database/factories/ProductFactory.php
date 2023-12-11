@@ -16,7 +16,8 @@ class ProductFactory extends Factory
     {
         $name = $this->faker->name();
         $seed = $this->faker->randomNumber();
-
+        $tags = ['man', 'woman', 'kid'];
+        $randomTag = $this->faker->randomElement($tags);
         // Tạo và lưu ảnh chính
         $imagePath = "images/products/{$name}_main.jpg";
         Image::make("https://picsum.photos/300/400?random={$seed}")
@@ -40,7 +41,8 @@ class ProductFactory extends Factory
             'description' => $this->faker->paragraph($nbSentences = 3, $variableNbSentences = true),
             'price' => $this->faker->randomFloat(2, 10, 1000),
             'quantity' => $this->faker->randomNumber(2),
-            'color' => $this->faker->hexColor,
+            'tag' => $randomTag,
+            'color_id' => $this->faker->numberBetween(1, 8),
             'category_id' => $this->faker->numberBetween(1, 5),
             'created_at' => $this->faker->dateTimeBetween('-1 years', 'now', null),
             'updated_at' => $this->faker->dateTimeBetween('-1 years', 'now', null),

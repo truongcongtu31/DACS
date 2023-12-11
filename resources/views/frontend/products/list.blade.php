@@ -17,14 +17,12 @@
                        class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">{{ $value['name'] }}</a>
 
                     <span class="stext-105 cl3">{{ '$' . number_format($value['price']) }}</span>
+                    @if($value->quantity === 0)
+                        <span class="stext-105 cl3 text-danger">Sold out</span>
+                    @endif
                 </div>
 
             </div>
         </div>
     </div>
 @endforeach
-
-
-
-
-

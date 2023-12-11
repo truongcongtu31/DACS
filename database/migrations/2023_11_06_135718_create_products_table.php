@@ -20,7 +20,9 @@ return new class extends Migration {
             $table->text('description');
             $table->decimal('price', 8, 2);
             $table->integer('quantity');
-            $table->string('color');
+            $table->string('tag');
+            $table->bigInteger('color_id')->unsigned();
+            $table->foreign('color_id')->references('id')->on('colors')->onDelete('cascade');
             $table->bigInteger('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();

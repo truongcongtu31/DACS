@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\FeedBack;
 use App\Models\Menu;
 use App\Models\Product;
@@ -16,7 +17,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    private $product, $category, $menu, $feedback;
+    protected $product, $category, $menu, $feedback, $color;
 
     public function __construct()
     {
@@ -24,6 +25,7 @@ class ProductController extends Controller
         $this->category = new Category();
         $this->menu = new Menu();
         $this->feedback = new FeedBack();
+        $this->color = new Color();
     }
 
 
@@ -51,7 +53,8 @@ class ProductController extends Controller
         $products = $this->product->getProductByfilter($request);
         $menus = $this->menu->getAllMenu();
         $categories = $this->category->getAllCategory();
-        return view('frontend.shop', compact('products', 'menus', 'categories'));
+        $colors = $this->color->getAllColor();
+        return view('frontend.shop', compact('products', 'menus', 'categories', 'colors'));
     }
 
     /**
@@ -66,7 +69,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = $this->category->getAllCategory();
-        return view('backend.product.addproduct')->with('categories', $categories);
+        $colors = $this->color->getAllColor();
+        return view('backend.product.addproduct', compact('categories', 'colors'));
     }
 
     public function store(Request $request)
@@ -89,7 +93,8 @@ class ProductController extends Controller
             $category = $this->category->getAllCategory();
             return view('backend.product.editproduct', [
                 'productDetail' => $productDetail,
-                'category' => $category
+                'category' => $category,
+                'colors' => $this->color->getAllColor()
             ]);
         } else {
             return redirect()->route('listproduct')->with('error', 'Sản phẩm không tồn tại !');

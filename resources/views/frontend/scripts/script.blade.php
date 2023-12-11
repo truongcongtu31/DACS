@@ -255,7 +255,6 @@
                     },
                     dataType: 'json',
                     success: function (data) {
-                        console.log(data);
                         if (data.status === 0) {
                             swal('Error', 'Check your delivery information again', 'error');
                         } else if (data.status === 404) {
@@ -266,50 +265,30 @@
                             swal("Success", 'You have successfully paid', 'success');
                             window.location = "{{route('cart')}}";
                         }
+                    },
+                    error: function (data) {
+                        window.location = "{{route('verification.notice')}}";
                     }
+
                 });
             } else {
-                // User clicked Cancel, do nothing or handle as needed
+
             }
         });
     }
 
 
     //Search
-
-    $(document).on('click', '#search-pagination a', function (e) {
-        e.preventDefault();
-        var page = $(this).attr('href').split('page=')[1];
-        paginateSearch(page);
-    });
     $(document).ready(function () {
         handleSearch();
     });
 
-    function paginateSearch(page) {
-        var value = $('#search-product').val();
-        $.ajax({
-            type: 'GET',
-            url: '{{ route('shop.search') }}' + '?page=' + page,
-            data: {
-                'search': value
-            },
-            success: function (data) {
-                $('#product').addClass('d-none');
-                $('#alldata').html(data.html);
-                $('#pagination').empty();
-                $('#search-pagination').html(data.pagination);
-                $('.js-show-modal1').on('click', function (e) {
-                    e.preventDefault();
-                    $('.js-modal1').addClass('show-modal1');
-                });
-            }
-        });
-    }
-
     function handleSearch() {
         $('#search-product').on('keyup', function () {
             var value = $(this).val();
+            if (value.length === 0) {
+                return;
+            }
             $.ajax({
                 type: 'GET',
                 url: '{{route('shop.search')}}',
@@ -317,10 +296,8 @@
                     'search': value
                 },
                 success: function (data) {
-                    $('#product').addClass('d-none');
-                    $('#alldata').html(data.html);
-                    $('#pagination').empty();
-                    $('#search-pagination').html(data.pagination);
+                    console.log(data);
+                    $('#product').html(data.html);
                     $('.js-show-modal1').on('click', function (e) {
                         e.preventDefault();
                         $('.js-modal1').addClass('show-modal1');
@@ -331,7 +308,6 @@
     }
 
     //Quick View Modal
-
     $(document).on('click', '.quick-view-btn', function (e) {
         e.preventDefault();
         var productURL = $(this).data('url');
@@ -345,14 +321,16 @@
             url: productUrl,
         })
             .done(function (data) {
+                console.log(data);
                 if (data) {
                     var wrapSlick3Dots = $(".wrap-modal").find('img');
                     wrapSlick3Dots.eq(0).attr('src', data.image_detail_1);
                     wrapSlick3Dots.eq(1).attr('src', data.image_detail_2);
                     wrapSlick3Dots.eq(2).attr('src', data.image_detail_3);
                     $('#name_product_modal').text(data.name);
+                    $('#tag').text("TAG: " + data.tag);
                     $('#price').text(data.price);
-                    $('#description_product_modal').text(data.description);
+                    $('#description_product_modal').html(data.description);
                     var imageDetails = [$("#image-detail-1"), $("#image-detail-2"), $("#image-detail-3")];
                     var details = [$("#detail-1"), $("#detail-2"), $("#detail-3")];
                     var imageDetailsSrc = [data.image_detail_1, data.image_detail_2, data.image_detail_3];
@@ -424,7 +402,7 @@
         paginateFeedback(page, id);
     });
 
-    $(document).on('click', '.btn-submit', function () {
+    $(document).on('click', '.btn-submit-feedback', function () {
         var data = {
             'star': $('#rating').val(),
             'content': $('#review').val(),

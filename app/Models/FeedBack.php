@@ -47,23 +47,24 @@ class FeedBack extends Model
         $orders = $user->orders;
 
         foreach ($orders as $order) {
-            $orderDetails = $this->order->getOrderByOrderId($order->id);
-            foreach ($orderDetails as $orderDetail) {
-                // Assuming product_id is an integer, you can compare directly
-                if (number_format($orderDetail->product_id) === number_format($request->product_id)) {
-                    $feedback = new FeedBack();
-                    $feedback->name = $request->input('name');
-                    $feedback->email = $request->input('email');
-                    $feedback->star = $request->input('star');
-                    $feedback->content = $request->input('content');
-                    $feedback->product_id = $request->input('product_id');
-                    $feedback->user_id = Auth::user()->id;
-                    $feedback->save();
-                    return response()->json(['status' => 1, 'msg' => 'Add success']);
+            if ($order->status === "received") {
+                $orderDetails = $this->order->getOrderByOrderId($order->id);
+                foreach ($orderDetails as $orderDetail) {
+                    // Assuming product_id is an integer, you can compare directly
+                    if (number_format($orderDetail->product_id) === number_format($request->product_id)) {
+                        $feedback = new FeedBack();
+                        $feedback->name = $request->input('name');
+                        $feedback->email = $request->input('email');
+                        $feedback->star = $request->input('star');
+                        $feedback->content = $request->input('content');
+                        $feedback->product_id = $request->input('product_id');
+                        $feedback->user_id = Auth::user()->id;
+                        $feedback->save();
+                        return response()->json(['status' => 1, 'msg' => 'Add success']);
+                    }
                 }
             }
         }
-
         return response()->json(['status' => 400]);
     }
 }
