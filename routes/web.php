@@ -178,6 +178,29 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             Route::get('/searchabout', [AboutController::class, 'getSearchAbout'])->name('searchabout');
         });
 
+        //admin/color
+        Route::prefix('/color')->group(function () {
+            Route::get('/add', [ColorController::class, 'create'])->name('addcolor');
+            Route::post('/add', [ColorController::class, 'store'])->name('color.post-add');
+            Route::get('/edit/{id}', [ColorController::class, 'edit'])->name('color.edit');
+            Route::post('/update', [ColorController::class, 'update'])->name('color.post-edit');
+            Route::get('/delete/{id}', [ColorController::class, 'destroy'])->name('color.delete');
+            Route::get('/list', [ColorController::class, 'show'])->name('listcolor');
+            Route::get('/searchcolor', [ColorController::class, 'getSearchColor'])->name('searchcolor');
+        });
+        //admin/comment
+        Route::prefix('/comment')->group(function () {
+            Route::get('/list', [CommentController::class, 'show'])->name('listcomment');
+            Route::get('/delete/{id}', [CommentController::class, 'destroy'])->name('comment.delete');
+            Route::get('/searchcomment', [CommentController::class, 'getSearchComment'])->name('searchcomment');
+        });
+        //admin/feedback
+        Route::prefix('/feedback')->group(function () {
+            Route::get('/list', [FeedBackController::class, 'show'])->name('listfeedback');
+            Route::get('/delete/{id}', [FeedBackController::class, 'destroy'])->name('feedback.delete');
+            Route::get('/searchfeedback', [FeedBackController::class, 'getSearchFeedback'])->name('searchfeedback');
+        });
+
     });
 });
 
