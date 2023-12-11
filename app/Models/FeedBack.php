@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
-use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+
 
 class FeedBack extends Model
 {
@@ -34,7 +36,7 @@ class FeedBack extends Model
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string'],
             'email' => ['required', 'email'],
-            'star' => ['required', 'integer', 'min:1'],
+            'star' => ['required', 'integer'],
             'content' => ['required', 'string'],
             'product_id' => ['required', 'integer']
         ]);
@@ -43,30 +45,40 @@ class FeedBack extends Model
             return response()->json(['status' => 0, 'error' => $validator->errors()->toArray()]);
         }
 
-        if (!Auth::check()) {
-            return response()->json(['status' => 403]);
-        }
         $user = Auth::user();
         $orders = $user->orders;
+
         foreach ($orders as $order) {
-            if ($order->status === "received") {
-                $orderDetails = $this->order->getOrderByOrderId($order->id);
-                foreach ($orderDetails as $orderDetail) {
-                    // Assuming product_id is an integer, you can compare directly
-                    if (number_format($orderDetail->product_id) === number_format($request->product_id)) {
-                        $feedback = new FeedBack();
-                        $feedback->name = $request->input('name');
-                        $feedback->email = $request->input('email');
-                        $feedback->star = $request->input('star');
-                        $feedback->content = $request->input('content');
-                        $feedback->product_id = $request->input('product_id');
-                        $feedback->user_id = Auth::user()->id;
-                        $feedback->save();
-                        return response()->json(['status' => 1, 'msg' => 'Add success']);
-                    }
+            $orderDetails = $this->order->getOrderByOrderId($order->id);
+            foreach ($orderDetails as $orderDetail) {
+                // Assuming product_id is an integer, you can compare directly
+                if (number_format($orderDetail->product_id) === number_format($request->product_id)) {
+                    $feedback = new FeedBack();
+                    $feedback->name = $request->input('name');
+                    $feedback->email = $request->input('email');
+                    $feedback->star = $request->input('star');
+                    $feedback->content = $request->input('content');
+                    $feedback->product_id = $request->input('product_id');
+                    $feedback->user_id = Auth::user()->id;
+                    $feedback->save();
+                    return response()->json(['status' => 1, 'msg' => 'Add success']);
                 }
             }
         }
+
         return response()->json(['status' => 400]);
+    }
+
+    public function getAllFeedback()
+    {
+        return FeedBack::paginate(10);
+    }
+
+    public function deleteFeedback($id)
+    {
+
+        return DB::table('feedbacks')
+            ->where('id', '=', $id)
+            ->delete();
     }
 }

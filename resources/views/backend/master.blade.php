@@ -342,6 +342,12 @@
                             </li>
                             <li class="nav-item"><a class="nav-link" href="{{ route('listabout') }}">About</a>
                             </li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('listcolor') }}">Color</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('listcomment') }}">Comment</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('listfeedback') }}">Feedback</a>
+                            </li>
 
 
                         </ul>

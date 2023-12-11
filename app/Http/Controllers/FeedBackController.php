@@ -16,11 +16,12 @@ class FeedBackController extends Controller
         $this->feedback = new FeedBack();
     }
 
-    public function showFeedbackAjax(Request $request){
-        if($request->ajax()){
+    public function showFeedbackAjax(Request $request)
+    {
+        if ($request->ajax()) {
             $feedback = $this->feedback->getFeedBack($request);
-            $output = view('frontend.products.feedback',compact('feedback'))->render();
-            return response()->json(['html'=>$output]);
+            $output = view('frontend.products.feedback', compact('feedback'))->render();
+            return response()->json(['html' => $output]);
         }
     }
 
@@ -44,9 +45,10 @@ class FeedBackController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(FeedBack $feedBack)
+    public function show()
     {
-        //
+        $feedback = $this->feedback->getAllFeedback();
+        return view('backend.feedback.listfeedback', compact('feedback'));
     }
 
     /**
@@ -68,8 +70,14 @@ class FeedBackController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(FeedBack $feedBack)
+    public function destroy($id)
     {
-        //
+        $delete = $this->feedback->deleteFeedback($id);
+        if ($delete) {
+            $success = "Xóa đánh giá thành công ";
+        } else {
+            $error = "Xóa đánh giá thất bại";
+        }
+        return redirect()->route('listfeedback')->with('success', 'Xóa đánh giá thành công ');
     }
 }

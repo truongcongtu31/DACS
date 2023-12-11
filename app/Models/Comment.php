@@ -5,23 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+
 
 class Comment extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
-
-    public function blog()
-    {
-        return $this->belongsTo(Blog::class, 'blog_id');
-    }
-
-    public function getAllComment()
-    {
-        return Comment::paginate(10);
-    }
 
     public function addComment(Request $request)
     {
@@ -51,5 +43,18 @@ class Comment extends Model
         return Comment::where('blog_id', $id)
             ->orderBy('created_at', 'desc')
             ->paginate(4);
+    }
+
+    public function getAllComment()
+    {
+        return Comment::paginate(10);
+    }
+
+    public function deleteComment($id)
+    {
+
+        return DB::table('comments')
+            ->where('id', '=', $id)
+            ->delete();
     }
 }
