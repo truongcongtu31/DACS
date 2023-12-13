@@ -35,7 +35,7 @@ class Cart extends Model
         $cart = session()->get('cart');
         if (isset($cart)) {
             foreach ($cart as $key => $value) {
-                $total += (number_format($value['price']) * $value['quantity']);
+                $total += (floatval($value['price']) * $value['quantity']);
             }
             return $total;
         } else {

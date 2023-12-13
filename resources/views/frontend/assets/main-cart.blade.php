@@ -40,7 +40,7 @@
                                 </div>
                             </td>
                             <td class="column-5">
-                                ${{number_format($value['price']) * number_format($value['quantity'])}}</td>
+                                ${{floatval($value['price']) * number_format($value['quantity'])}}</td>
                         </tr>
                     @endforeach
                 @endif

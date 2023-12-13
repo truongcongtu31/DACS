@@ -20,7 +20,7 @@
                                     <th class="column-5">Total</th>
                                 </tr>
                                 @if(isset($orderDetail))
-                                    @foreach($orderDetail as $key => $value)
+                                    @foreach($orderDetail as $value)
                                         <tr class="table_row">
                                             <td class="column-1">
                                                 <div>

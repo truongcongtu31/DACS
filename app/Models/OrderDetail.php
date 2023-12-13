@@ -26,7 +26,7 @@ class OrderDetail extends Model
     {
         $user = Auth::user();
         if (isset($user)) {
-            return OrderDetail::with('products')->where('order_id', $id)->get();
+            return OrderDetail::where('order_id', $id)->get();
         }
     }
 }
