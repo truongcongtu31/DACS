@@ -34,6 +34,7 @@
                             <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
                             <div class="slick3 gallery-lb">
+
                                 <div class="item-slick3" data-thumb="{{$product->image_detail_1}}">
                                     <div class="wrap-pic-w pos-relative">
                                         <img src="{{ $product->image_detail_1 }}" alt="IMG-PRODUCT">
@@ -80,10 +81,13 @@
                         <span class="mtext-106 cl2">
                             ${{number_format($product->price)}}
                         </span>
-
-                        <p class="stext-102 cl3 p-t-23">
-                            {!! $product->description !!}
+                         <p class="stext-102 cl3 p-t-23">
+                                                    {!! $product->description !!}
                         </p>
+
+                       <p class="stext-102 cl3 p-t-23" style="text-transform: uppercase">
+                              <b> TAG:  {!! $product->tag !!} </b>
+                       </p>
 
                         <!--  -->
                         <div class="p-t-33">

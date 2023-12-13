@@ -74,17 +74,13 @@ class Product extends Model
         $end = $request->get('end', 100000);
         $colors = $request->get('colors');
         $id = $request->get('id');
-
         $query = Product::whereBetween('price', [$start, $end]);
-
         if ($id) {
             $query->where('category_id', $id);
         }
-
         if ($filterField) {
             $query->orderBy($filterField, $filterDirection);
         }
-
         if (!empty($colors)) {
             $query->where('color_id', $colors);
         }

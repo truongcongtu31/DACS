@@ -49,8 +49,8 @@
                                                         <tr>
                                                             <td>{{ $key + 1 }}</td>
                                                             <td>{{ $item->title }}</td>
-                                                            <td>{{ $item->content }}</td>
-                                                            <td> <img src="{{ asset( $item->image) }}" 
+                                                            <td>{!! $item->content !!}</td>
+                                                            <td> <img src="{{ asset( $item->image) }}"
                                                                     style="width: 120px; height: 180px; border-radius: 0%;">
                                                             </td>
                                                             <td style="text-align: center">

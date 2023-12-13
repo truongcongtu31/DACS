@@ -50,7 +50,9 @@ class ProductController extends Controller
 
     public function getProductByFilter(Request $request)
     {
-        $products = $this->product->getProductByfilter($request);
+        $products = $this->product->getProductByFilter($request);
+//                 $products = $this->product->getAllProduct();
+
         $menus = $this->menu->getAllMenu();
         $categories = $this->category->getAllCategory();
         $colors = $this->color->getAllColor();
