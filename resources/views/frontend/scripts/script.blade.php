@@ -512,10 +512,10 @@
         });
     }
 
+
     //Order
     $(document).on('click', '.modal-detail-order', function (e) {
         e.preventDefault();
-        $("#exampleModalCenter").modal("show");
         $.ajax({
             type: 'GET',
             url: "{{route('order.detail.show')}}" + "/" + $(this).data('id'),
@@ -523,6 +523,7 @@
             success: function (data) {
                 console.log(data);
                 $('#modal-order').html(data.html);
+                $("#exampleModalCenter").modal("show");
             }
         });
     })

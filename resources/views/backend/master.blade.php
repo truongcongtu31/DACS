@@ -21,7 +21,7 @@
 
     <link rel="stylesheet" href="{{asset('/backend/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('/backend/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
-    
+
 
     <!-- inject:css -->
     <link rel="stylesheet" href="{{asset('/backend/css/vertical-layout-light/style.css')}}">
@@ -91,23 +91,28 @@
                         <div class="dropdown-header text-center">
                             <img class="img-md rounded-circle" src="/backend/images/faces/face8.jpg"
                                  alt="Profile image">
-                            <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
-                            <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
+                            <p class="mb-1 mt-3 font-weight-semibold">
+                                @if(Auth::user()->role === "admin" )
+                                    {{Auth::user()->name}}
+                                @endif
+                            </p>
+                            <p class="fw-light text-muted mb-0">
+                                @if(Auth::user()->role === "admin" )
+                                    {{Auth::user()->email}}
+                                @endif</p>
                         </div>
-                        <a class="dropdown-item"><i
+                        <a href="{{route('profile.edit')}}" class="dropdown-item"><i
                                 class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile
                             <span class="badge badge-pill badge-danger">1</span></a>
-                        <a class="dropdown-item"><i
-                                class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i>
-                            Messages</a>
-                        <a class="dropdown-item"><i
-                                class="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2"></i>
-                            Activity</a>
-                        <a class="dropdown-item"><i
-                                class="dropdown-item-icon mdi mdi-help-circle-outline text-primary me-2"></i>
-                            FAQ</a>
-                        <a class="dropdown-item"><i
-                                class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
+
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="dropdown-item"><i
+                                    class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>
+                                Logout
+                            </button>
+                        </form>
+
                     </div>
                 </li>
             </ul>

@@ -20,7 +20,7 @@ class Category extends Model
 
     public function getAllCategory()
     {
-        return Category::paginate(8);
+        return Category::all();
     }
 
 
