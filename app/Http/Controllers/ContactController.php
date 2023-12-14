@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -10,6 +11,19 @@ class ContactController extends Controller
     /**
      * Display a listing of the resource.
      */
+    private $menu;
+
+    public function __construct()
+    {
+        $this->menu = new Menu();
+    }
+
+    public function getContact()
+    {
+        $menus = $this->menu->getAllMenu();
+        return view('frontend.contact', compact('menus'));
+    }
+
     public function index()
     {
         //

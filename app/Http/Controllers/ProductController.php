@@ -55,7 +55,7 @@ class ProductController extends Controller
 
         $menus = $this->menu->getAllMenu();
         $categories = $this->category->getAllCategory();
-        $colors = $this->color->getAllColor();
+        $colors = $this->color->getColor();
         return view('frontend.shop', compact('products', 'menus', 'categories', 'colors'));
     }
 

@@ -4,15 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AboutRequest;
 use App\Models\About;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 
 class AboutController extends Controller
 {
-    protected $about;
+    protected $about, $menu;
 
     public function __construct(About $about)
     {
         $this->about = $about;
+        $this->menu = new Menu();
+    }
+
+    public function getAbout()
+    {
+        $abouts = $this->about->getAllAbout();
+        $menus = $this->menu->getAllMenu();
+        return view('frontend.about', compact('menus', 'abouts'));
     }
 
     public function create()
@@ -26,16 +35,16 @@ class AboutController extends Controller
     }
 
     public function edit(Request $request)
-        {
+    {
 
-            $aboutDetail = $this->about->getDetail($request->id);
-            if (!empty($aboutDetail)) {
-                return view('backend.about.editabout', [
-                    'aboutDetail' => $aboutDetail,
-                ]);
-            }
-
+        $aboutDetail = $this->about->getDetail($request->id);
+        if (!empty($aboutDetail)) {
+            return view('backend.about.editabout', [
+                'aboutDetail' => $aboutDetail,
+            ]);
         }
+
+    }
 
     public function show()
     {
@@ -43,10 +52,10 @@ class AboutController extends Controller
         return view('backend.about.listabout', ['about' => $about]);
     }
 
-       public function update(Request $request)
-       {
-           return $this->about->updateAbout($request);
-       }
+    public function update(Request $request)
+    {
+        return $this->about->updateAbout($request);
+    }
 
     public function destroy($id)
     {

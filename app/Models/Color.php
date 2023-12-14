@@ -24,18 +24,17 @@ class Color extends Model
         return Color::paginate(8);
     }
 
+    public function getColor()
+    {
+        return Color::all();
+    }
+
 
     public function addColor($data)
     {
         return DB::table('colors')->insert($data);
     }
-
-    public function getColor()
-    {
-        $color = Color::all();
-        return $color;
-
-    }
+    
 
     public function getDetail($id)
     {

@@ -8,6 +8,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FeedBackController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
@@ -67,20 +68,27 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 //User
 Route::prefix('user')->group(function () {
-    Route::get('/home', [UserController::class, 'index'])->name('home');
+    //Home
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/home/product-detail/{id?}', [HomeController::class, 'showProductDetail'])->name('product.show');
+    //Shop
     Route::get('/shop', [ProductController::class, 'getProductByFilter'])->name('shop');
     Route::get('/search', [ProductController::class, 'searchProduct'])->name('shop.search');
+    //Product Detail
     Route::get('/product-detail', [ProductController::class, 'showProductDetail'])->name('product-detail');
     Route::get('/feedback-ajax', [FeedbackController::class, 'showFeedbackAjax'])->name('feedback.show');
     Route::post('/add-feedback', [FeedbackController::class, 'store'])->name('feedback.add');
-    Route::get('/blog', [UserController::class, 'getBlog'])->name('blog');
-    Route::get('/blog-detail/{id}', [UserController::class, 'getBlogDetail'])->name('blog-detail');
+    //Blog
+    Route::get('/blog', [BlogController::class, 'getBlog'])->name('blog');
+    Route::get('/blog-detail/{id}', [BlogController::class, 'getBlogDetail'])->name('blog-detail');
     Route::get('/show-comment-ajax', [CommentController::class, 'showCommentAjax'])->name('show-comment-ajax');
     Route::post('/add-comment', [CommentController::class, 'addComment'])->name('add-comment');
-    Route::get('/about', [UserController::class, 'getAbout'])->name('about');
-    Route::get('/contact', [UserController::class, 'getContact'])->name('contact');
-    Route::get('/cart', [UserController::class, 'getCart'])->name('cart');
+    //About
+    Route::get('/about', [AboutController::class, 'getAbout'])->name('about');
+    //Contact
+    Route::get('/contact', [ContactController::class, 'getContact'])->name('contact');
+    //Cart
+    Route::get('/cart', [CartController::class, 'getCart'])->name('cart');
     Route::get('/add-to-cart/{id?}', [CartController::class, 'addToCart'])->name('add-to-cart');
     Route::get('update-cart', [CartController::class, 'updateCart'])->name('update-cart');
     Route::get('delete-cart', [CartController::class, 'deleteCart'])->name('delete-cart');
@@ -105,6 +113,22 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::prefix('/admin')->group(function () {
 
         Route::get('/', [AdminController::class, 'index'])->name('homeAdmin');
+
+        //admin/user
+        Route::prefix('/user')->group(function () {
+            Route::post('/update', [UserController::class, 'update'])->name('user.post-edit');
+            Route::get('/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
+            Route::get('/list', [UserController::class, 'show'])->name('listuser');
+            Route::get('/searchuser', [UserController::class, 'getSearchUser'])->name('searchuser');
+        });
+
+        //admin/order
+        Route::prefix('/order')->group(function () {
+            Route::post('/update', [OrderController::class, 'update'])->name('order.post-edit');
+            Route::get('/delete/{id}', [OrderController::class, 'destroy'])->name('order.delete');
+            Route::get('/list', [OrderController::class, 'show'])->name('listorder');
+            Route::get('/searchuser', [OrderController::class, 'getSearchUser'])->name('searchorder');
+        });
 
         //admin/products
         Route::prefix('/product')->group(function () {

@@ -29,6 +29,11 @@ class Order extends Model
         return Order::where('user_id', $id)->get();
     }
 
+    public function getAllOrder()
+    {
+        return Order::orderBy('user_id')->paginate(8);
+    }
+
     public function addOrder(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -88,6 +93,19 @@ class Order extends Model
         $order = Order::find($id);
         if ($order->status == "not received") {
             $order->status = "received";
+            return $order->save();
+        }
+        return false;
+    }
+
+    public function adminChangeStatusOrder($id)
+    {
+        $order = Order::find($id);
+        if ($order->status == "not received") {
+            $order->status = "received";
+            return $order->save();
+        } elseif ($order->status == "received") {
+            $order->status = "not received";
             return $order->save();
         }
         return false;

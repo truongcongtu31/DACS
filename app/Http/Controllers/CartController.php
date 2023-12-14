@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Menu;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Psr\Container\ContainerExceptionInterface;
@@ -10,12 +11,21 @@ use Psr\Container\NotFoundExceptionInterface;
 
 class CartController extends Controller
 {
-    private $cart, $product;
+    private $cart, $product, $menu;
 
     public function __construct()
     {
         $this->cart = new Cart();
         $this->product = new Product();
+        $this->menu = new Menu();
+    }
+
+    public function getCart()
+    {
+        $cart = session()->get('cart');
+        $total = $this->cart->getToTal();
+        $menus = $this->menu->getAllMenu();
+        return view('frontend.cart', compact('cart', 'total', 'menus'));
     }
 
     /**
@@ -58,13 +68,6 @@ class CartController extends Controller
         $total = $this->cart->getToTal();
         $output = view('frontend.products.modal-cart', compact('cart', 'total'))->render();
         return response()->json(['html' => $output]);
-    }
-
-    public function getCart()
-    {
-        $cart = session()->get('cart');
-        $total = $this->cart->getToTal();
-        return view('frontend.cart', compact('cart', 'total'));
     }
 
     /**

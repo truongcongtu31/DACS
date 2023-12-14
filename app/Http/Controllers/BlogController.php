@@ -3,29 +3,58 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Cart;
+use App\Models\Category;
+use App\Models\Comment;
+use App\Models\Menu;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
-    protected $blog;
+    protected $slide, $banner, $product, $menu, $blog, $about, $contact, $category, $cart, $comment;
 
-    public function __construct(Blog $blog)
+    public function __construct()
     {
-        $this->blog = $blog;
+        $this->menu = new Menu();
+        $this->blog = new Blog();
+        $this->product = new Product();
+        $this->category = new Category();
+        $this->cart = new Cart();
+        $this->comment = new Comment();
     }
 
-    public function showBlogDetail(Request $request, $id = 0)
+    public function getBlog()
     {
-        if (!empty($id)) {
-            $blogDetail = $this->blog->getDetail($id);
-            if (!empty($blogDetail[0])) {
-                $request->session()->put('id', $id);
-                return view('frontend.blog-detail', [
-                    'blogDetail' => $blogDetail,
-                ]);
-            }
-        }
+        $menus = $this->menu->getAllMenu();
+        $blogs = $this->blog->getAllBlog();
+        $categories = $this->category->getAllCategory();
+        $products = $this->product->getLatestProduct();
+        return view('frontend.blog', compact('menus', 'blogs', 'categories', 'products'));
     }
+
+    public function getBlogDetail(Request $request)
+    {
+        $menus = $this->menu->getAllMenu();
+        $blog = $this->blog->getBlogById($request->id);
+        $comments = $this->comment->getCommentById($request->id);
+        $categories = $this->category->getAllCategory();
+        $products = $this->product->getLatestProduct();
+        return view('frontend.blog-detail', compact('menus', 'blog', 'comments', 'categories', 'products'));
+    }
+
+//    public function showBlogDetail(Request $request, $id = 0)
+//    {
+//        if (!empty($id)) {
+//            $blogDetail = $this->blog->getDetail($id);
+//            if (!empty($blogDetail[0])) {
+//                $request->session()->put('id', $id);
+//                return view('frontend.blog-detail', [
+//                    'blogDetail' => $blogDetail,
+//                ]);
+//            }
+//        }
+//    }
 
     public function create()
     {

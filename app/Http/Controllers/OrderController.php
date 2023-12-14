@@ -47,16 +47,6 @@ class OrderController extends Controller
         }
     }
 
-    public function changeStatus(Request $request)
-    {
-        $result = $this->order->changeStatusOrder($request->id);
-        if ($result === true) {
-            return redirect()->back()->with('success', 'Goods received successfully');
-        }
-        return redirect()->back()->with('error', 'Status cannot be changed. Please contact 0352029544 for resolution');
-
-    }
-
     public function showOrderDetail(Request $request)
     {
         $orderDetail = $this->orderdetail->getOrderByOrderId($request->id);
@@ -88,9 +78,10 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
+    public function show()
     {
-        //
+        $order = $this->order->getAllOrder();
+        return view('backend.orders.listorder', compact('order'));
     }
 
     /**
@@ -104,9 +95,24 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request)
     {
-        //
+        $order = $this->order->adminChangeStatusOrder($request->id);
+        if ($order) {
+            return redirect()->back()->with('success', 'Change status successfully');
+        } else {
+            return redirect()->back()->with('error', 'Change status failed');
+        }
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $result = $this->order->changeStatusOrder($request->id);
+        if ($result === true) {
+            return redirect()->back()->with('success', 'Goods received successfully');
+        }
+        return redirect()->back()->with('error', 'Status cannot be changed. Please contact 0352029544 for resolution');
+
     }
 
     /**
