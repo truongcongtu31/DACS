@@ -87,7 +87,7 @@ class Banner extends Model
             $banner->event = $request->input('event');
             $result = $banner->save();
             if ($result) {
-                return redirect()->route('listbanner')->with('success', "Add banner success!");
+                return redirect()->route('listbanner')->with('success', "Update banner success!");
             }
         }
     }

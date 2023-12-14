@@ -255,7 +255,7 @@ class Product extends Model
             $product->updated_at = date('Y-m-d H:i:s');
             $result = $product->save();
             if ($result) {
-                return redirect()->route('listproduct')->with('success', "Update product thành công!");
+                return redirect()->route('listproduct')->with('success', "Update product success!");
             } else {
                 return redirect()->route('listproduct')->with('error', "Failed to update product!");
             }

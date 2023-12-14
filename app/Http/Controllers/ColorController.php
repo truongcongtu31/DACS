@@ -36,7 +36,7 @@ class ColorController extends Controller
         ];
 
         $this->color->addColor($data);
-        return redirect()->route('listcolor')->with('success', 'Thêm màu sản phẩm thành công');
+        return redirect()->route('listcolor')->with('success', 'Added color successfully !');
     }
 
     /**
@@ -73,7 +73,7 @@ class ColorController extends Controller
 
         ];
         $this->color->updateColor($dataUpdate, $id);
-        return redirect()->route('listcolor')->with('success', 'Cập nhật màu sản phẩm thành công');
+        return redirect()->route('listcolor')->with('success', 'Update color successfully !');
     }
 
     /**
@@ -83,24 +83,24 @@ class ColorController extends Controller
     {
         $delete = $this->color->deleteColor($id);
         if ($delete) {
-            $success = "Xóa màu sản phẩm thành công ";
+            $success = "Successfully deleted color ! ";
         } else {
-            $error = "Xóa màu sản phẩm thất bại";
+            $error = "Delete failed color";
         }
-        return redirect()->route('listcolor')->with('success', 'Xóa màu sản phẩm thành công ');
+        return redirect()->route('listcolor')->with('success', 'Successfully deleted color');
     }
 
     public function getSearchColor(Request $request)
     {
         $keyword = $request->input('search');
         if (empty($keyword)) {
-            return redirect()->route('listcolor')->with('error', 'Bạn cần nhập màu cần tìm  !');
+            return redirect()->route('listcolor')->with('error', 'Please enter the keyword you are looking for !');
         } else {
             $search = Color::where('name', 'like', '%' . $keyword . '%');
             if ($search->count() == 0) {
-                return redirect()->route('listcolor')->with('error', 'Màu sản phẩm bạn cần tìm không tồn tại !');
+                return redirect()->route('listcolor')->with('error', 'The color you are looking for does not exist !');
             } else {
-                $color = $search->paginate(5);
+                $color = $search->paginate(4);
                 return view('backend.color.listcolor', ['color' => $color]);
             }
         }

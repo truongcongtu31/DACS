@@ -21,7 +21,7 @@ class About extends Model
 
     public function getAllAbout()
     {
-        $about = About::all();
+        $about = About::paginate(5);
         return $about;
     }
 

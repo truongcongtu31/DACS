@@ -53,23 +53,23 @@ class BannerController extends Controller
     {
         $delete = $this->banner->deleteBanner($id);
         if ($delete) {
-            $success = "Xóa thông tin banner thành công ";
+            $success = "Successfully deleted banner information ! ";
         } else {
-            $error = "Xóa thông tin banner thất bại";
+            $error = "Deleting banner information failed !";
         }
-        return redirect()->route('listbanner')->with('success', 'Xóa thông tin banner thành công ');
+        return redirect()->route('listbanner')->with('success', 'Successfully deleted banner information ! ');
     }
 
     public function getSearchBanner(Request $request)
     {
         $keyword = $request->input('search');
         if ($keyword == null) {
-            return redirect()->route('listbanner')->with('error', 'Vui lòng nhập từ khóa bạn tìm kiếm');
+            return redirect()->route('listbanner')->with('error', 'Please enter the keyword you are looking for !');
         } else {
             $search = Banner::where('name', 'like', '%' . $keyword . '%')
                 ->orWhere('event', 'like', '%' . $keyword . '%');
             if ($search->count() == 0) {
-                return redirect()->route('listbanner')->with('error', 'Thông tin banner bạn cần tìm không tồn tại !');
+                return redirect()->route('listbanner')->with('error', 'The banner information you are looking for does not exist !');
             } else {
                 $banner = $search->get();
                 return view('backend.banner.listbanner', ['banner' => $banner]);

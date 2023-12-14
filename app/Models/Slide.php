@@ -75,7 +75,7 @@ class Slide extends Model
             }
             $result = $slide->save();
             if ($result) {
-                return redirect()->route('listslide')->with('success', "Update slide thành công!");
+                return redirect()->route('listslide')->with('success', "Update slide success!");
             } else {
                 return redirect()->route('listslide')->with('error', "Failed to update slide!");
             }

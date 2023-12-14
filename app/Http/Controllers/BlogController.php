@@ -93,25 +93,25 @@ class BlogController extends Controller
     {
         $delete = $this->blog->deleteBlog($id);
         if ($delete) {
-            $success = "Xóa thông tin bài viết thành công ";
+            $success = "Successfully deleted blog information ! ";
         } else {
-            $error = "Xóa thông tin bài viết thất bại";
+            $error = "Deleting blog information failed !";
         }
-        return redirect()->route('listblog')->with('success', 'Xóa thông tin bài viết thành công ');
+        return redirect()->route('listblog')->with('success', 'Successfully deleted blog information !');
     }
 
     public function getSearchBlog(Request $request)
     {
         $keyword = $request->input('search');
         if ($keyword == null) {
-            return redirect()->route('listblog')->with('error', 'Vui lòng nhập từ khóa bạn tìm kiếm');
+            return redirect()->route('listblog')->with('error', 'Please enter the keyword you are looking for !');
         } else {
             $search = Blog::where('title', 'like', '%' . $keyword . '%')
                 ->orWhere('description', 'like', '%' . $keyword . '%');
             if ($search->count() == 0) {
-                return redirect()->route('listblog')->with('error', 'Thông tin bài viết bạn cần tìm không tồn tại !');
+                return redirect()->route('listblog')->with('error', 'The blog information you are looking for does not exist!!');
             } else {
-                $blog = $search->get();
+                $blog = $search->paginate(3);
                 return view('backend.blog.listblog', ['blog' => $blog]);
             }
         }

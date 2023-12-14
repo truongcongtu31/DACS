@@ -52,27 +52,13 @@ class SlideController extends Controller
     {
         $delete = $this->slide->deleteSlide($id);
         if ($delete) {
-            $success = "Xóa thông tin slide thành công ";
+            $success = "Successfully deleted slide information !";
         } else {
-            $error = "Xóa thông tin slide thất bại";
+            $error = "Delete slide information failed !";
         }
-        return redirect()->route('listslide')->with('success', 'Xóa thông tin slide thành công ');
+        return redirect()->route('listslide')->with('success', 'Successfully deleted slide information !');
     }
 
-    public function getSearchSlide(Request $request)
-    {
-        $keyword = $request->input('search');
-        if ($keyword == null) {
-            return redirect()->route('listslide')->with('error', 'Vui lòng nhập từ khóa bạn tìm kiếm');
-        } else {
-            $search = Slide::where('image', 'like', '%' . $keyword . '%');
-            if ($search->count() == 0) {
-                return redirect()->route('listslide')->with('error', 'Thông tin slide bạn cần tìm không tồn tại !');
-            } else {
-                $slide = $search->paginate(5);
-                return view('backend.slide.listslide', ['slide' => $slide]);
-            }
-        }
-    }
+
 
 }

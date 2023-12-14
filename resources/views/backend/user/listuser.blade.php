@@ -1,7 +1,7 @@
 @extends('backend.master')
 @section('search')
     <li class="nav-item">
-        <form class="search-form" method="GET" action="{{ route('searchslide') }}">
+        <form class="search-form" method="GET" action="{{ route('searchuser') }}">
             <i class="icon-search"></i>
             <input type="search" class="form-control" name="search" placeholder="Search Here" title="Search here">
         </form>
@@ -38,6 +38,8 @@
                                                 <th style="text-align: center">Role</th>
                                                 <th style="text-align: center">Created at</th>
                                                 <th style="text-align: center">Update at</th>
+                                                <th style="text-align: center">Service</th>
+
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -59,9 +61,9 @@
                                                             @csrf
                                                             <td style="text-align: center">
                                                                 <select
-                                                                    style="width: 80px;background: #333;color: #ffffff"
+                                                                    style="width: 80px;text-align:center;background: #333;color: #ffffff"
                                                                     class="form-control bg-gray-600"
-                                                                    name="role">
+                                                                    name="role" >
                                                                     <option
                                                                         value="admin" {{$item->role == "admin" ? "selected" : ""}}>
                                                                         Admin

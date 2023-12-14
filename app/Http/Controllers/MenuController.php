@@ -46,7 +46,7 @@ class MenuController extends Controller
         ];
 
         $this->menu->addMenu($data);
-        return redirect()->route('listmenu')->with('success', 'Thêm menu sản phẩm thành công');
+        return redirect()->route('listmenu')->with('success', 'Added product menu successfully !');
     }
 
     /**
@@ -85,7 +85,7 @@ class MenuController extends Controller
         ];
 
         $this->menu->updateMenu($dataUpdate, $id);
-        return redirect()->route('listmenu')->with('success', 'Cập nhật menu thành công');
+        return redirect()->route('listmenu')->with('success', 'Update product menu successfully !');
     }
 
     /**
@@ -95,23 +95,23 @@ class MenuController extends Controller
     {
         $delete = $this->menu->deleteMenu($id);
         if ($delete) {
-            $success = "Xóa menu thành công ";
+            $success = "Menu removed successfully ! ";
         } else {
-            $error = "Xóa menu thất bại";
+            $error = "Delete menu failed !";
         }
-        return redirect()->route('listmenu')->with('success', 'Xóa menu thành công ');
+        return redirect()->route('listmenu')->with('success', 'Menu removed successfully ! ');
     }
 
     public function getSearchMenu(Request $request)
     {
         $keyword = $request->input('search');
         if (empty($keyword)) {
-            return redirect()->route('listmenu')->with('error', 'Bạn cần nhập menu cần tìm  !');
+            return redirect()->route('listmenu')->with('error', 'Please enter the keyword you are looking for  !');
         } else {
             $search = Menu::where('name', 'like', '%' . $keyword . '%')
                 ->orWhere('url', 'like', '%' . $keyword . '%');
             if ($search->count() == 0) {
-                return redirect()->route('listmenu')->with('error', 'menu bạn cần tìm không tồn tại !');
+                return redirect()->route('listmenu')->with('error', 'The menu you are looking for does not exist !');
             } else {
                 $menu = $search->paginate(5);
                 return view('backend.menu.listmenu', ['menu' => $menu]);

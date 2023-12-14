@@ -30,11 +30,11 @@ class CommentController extends Controller
     {
         $delete = $this->comment->deleteComment($id);
         if ($delete) {
-            $success = "Xóa bình luận thành công ";
+            $success = "Comment deleted successfully !";
         } else {
-            $error = "Xóa bình luận thất bại";
+            $error = "Comment deletion failed !";
         }
-        return redirect()->route('listcomment')->with('success', 'Xóa bình luận thành công ');
+        return redirect()->route('listcomment')->with('success', 'Comment deleted successfully !');
     }
 
     public function show()
@@ -47,11 +47,11 @@ class CommentController extends Controller
     {
         $keyword = $request->input('search');
         if (empty($keyword)) {
-            return redirect()->route('listcomment')->with('error', 'Bạn cần nhập bình luận cần tìm  !');
+            return redirect()->route('listcomment')->with('error', 'Please enter the keyword you are looking for  !');
         } else {
             $search = Comment::where('name', 'like', '%' . $keyword . '%');
             if ($search->count() == 0) {
-                return redirect()->route('listcomment')->with('error', 'Bình luận bạn cần tìm không tồn tại !');
+                return redirect()->route('listcomment')->with('error', 'The comment you are looking for does not exist!');
             } else {
                 $comments = $search->paginate(5);
                 return view('backend.comment.listcomment', ['comment' => $comments]);

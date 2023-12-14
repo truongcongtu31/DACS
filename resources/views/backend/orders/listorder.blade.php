@@ -1,7 +1,7 @@
 @extends('backend.master')
 @section('search')
     <li class="nav-item">
-        <form class="search-form" method="GET" action="{{ route('searchslide') }}">
+        <form class="search-form" method="GET" action="{{ route('searchorder') }}">
             <i class="icon-search"></i>
             <input type="search" class="form-control" name="search" placeholder="Search Here" title="Search here">
         </form>
@@ -21,7 +21,7 @@
                         <div class="col-lg-12 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
-                                    <h2 style="text-align: center;padding-bottom: 20px">List User </h2>
+                                    <h2 style="text-align: center;padding-bottom: 20px">List Order </h2>
                                     <div class="table-responsive">
                                         <table class="table table-striped">
                                             <thead>
@@ -43,6 +43,7 @@
                                                 <th style="text-align: center">Total</th>
                                                 <th style="text-align: center">Pay Method</th>
                                                 <th style="text-align: center">Status</th>
+                                                <th style="text-align: center">Service</th>
 
                                             </tr>
                                             </thead>

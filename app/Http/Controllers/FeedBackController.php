@@ -74,10 +74,10 @@ class FeedBackController extends Controller
     {
         $delete = $this->feedback->deleteFeedback($id);
         if ($delete) {
-            $success = "Xóa đánh giá thành công ";
+            $success = "Feedback removed successfully ";
         } else {
-            $error = "Xóa đánh giá thất bại";
+            $error = "Delete failed feedback";
         }
-        return redirect()->route('listfeedback')->with('success', 'Xóa đánh giá thành công ');
+        return redirect()->route('listfeedback')->with('success', 'Feedback removed successfully ');
     }
 }

@@ -42,4 +42,22 @@ class UserController extends Controller
             return redirect()->route('listuser')->with('error', "Delete user fail!");
         }
     }
+    public function getSearchUser(Request $request){
+        $keyword = $request->input('search');
+        if($keyword ==null){
+        return redirect()->route('listuser')->with('error','Please enter the keyword you want to search for!');
+        }
+        else{
+
+         $search = User::where('name', 'like', '%' . $keyword . '%')
+                  ->orWhere('email', 'like', '%' . $keyword . '%')
+                  ->orWhere('phone', 'like',  $keyword  );
+          if ($search->count() == 0) {
+             return redirect()->route('listuser')->with('error', 'The order information you are looking for does not exist!');
+          } else {
+             $user = $search->paginate(8);
+          return view('backend.user.listuser', ['user' => $user]);
+         }
+        }
+        }
 }

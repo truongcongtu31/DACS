@@ -127,7 +127,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             Route::post('/update', [OrderController::class, 'update'])->name('order.post-edit');
             Route::get('/delete/{id}', [OrderController::class, 'destroy'])->name('order.delete');
             Route::get('/list', [OrderController::class, 'show'])->name('listorder');
-            Route::get('/searchuser', [OrderController::class, 'getSearchUser'])->name('searchorder');
+            Route::get('/searchorder', [OrderController::class, 'getSearchOrder'])->name('searchorder');
         });
 
         //admin/products
@@ -159,7 +159,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             Route::post('/update', [SlideController::class, 'update'])->name('slide.post-edit');
             Route::get('/delete/{id}', [SlideController::class, 'destroy'])->name('slide.delete');
             Route::get('/list', [SlideController::class, 'show'])->name('listslide');
-            Route::get('/searchslide', [SlideController::class, 'getSearchSlide'])->name('searchslide');
         });
 
         //admin/banner

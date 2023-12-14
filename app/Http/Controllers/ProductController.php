@@ -99,7 +99,7 @@ class ProductController extends Controller
                 'colors' => $this->color->getAllColor()
             ]);
         } else {
-            return redirect()->route('listproduct')->with('error', 'Sản phẩm không tồn tại !');
+            return redirect()->route('listproduct')->with('error', 'Product does not exist !');
         }
     }
 
@@ -116,26 +116,25 @@ class ProductController extends Controller
     {
         $delete = $this->product->deleteProduct($id);
         if ($delete) {
-            $success = "Xóa sản phẩm thành công ";
+            $success = "Product removed successfully !";
         } else {
-            $error = "Xóa sản phẩm thất bại";
+            $error = "Delete product failed !";
         }
-        return redirect()->route('listproduct')->with('success', 'Xóa sản phẩm thành công ');
+        return redirect()->route('listproduct')->with('success', 'Product removed successfully !');
     }
 
     public function getSearchProduct(Request $request)
     {
         $keyword = $request->input('search');
         if (empty($keyword)) {
-            return redirect()->route('listproduct')->with('error', 'Bạn cần nhập sản phẩm cần tìm  !');
+            return redirect()->route('listproduct')->with('error', 'Please enter the keyword you are looking for !');
         } else {
             $search = Product::where('name', 'like', '%' . $keyword . '%')
                 ->orWhere('price', 'like', '%' . $keyword . '%')
                 ->orWhere('description', 'like', '%' . $keyword . '%')
-                ->orWhere('color', 'like', '%' . $keyword . '%')
                 ->orWhere('quantity', 'like', '%' . $keyword . '%');
             if ($search->count() == 0) {
-                return redirect()->route('listproduct')->with('error', 'Sản phẩm bạn cần tìm không tồn tại !');
+                return redirect()->route('listproduct')->with('error', 'The product you are looking for does not exist !');
             } else {
                 $products = $search->paginate(5);
                 return view('backend.product.listproduct', ['product' => $products]);

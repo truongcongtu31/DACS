@@ -61,25 +61,25 @@ class AboutController extends Controller
     {
         $delete = $this->about->deleteAbout($id);
         if ($delete) {
-            $success = "Xóa thông tin about thành công ";
+            $success = "Successfully deleted about information ! ";
         } else {
-            $error = "Xóa thông tin about thất bại";
+            $error = "Delete information about failure !";
         }
-        return redirect()->route('listabout')->with('success', 'Xóa thông tin about thành công ');
+        return redirect()->route('listabout')->with('success', 'Successfully deleted about information ! ');
     }
 
     public function getSearchAbout(Request $request)
     {
         $keyword = $request->input('search');
         if ($keyword == null) {
-            return redirect()->route('listabout')->with('error', 'Vui lòng nhập từ khóa bạn tìm kiếm');
+            return redirect()->route('listabout')->with('error', 'Please enter the keyword you are looking for !');
         } else {
             $search = About::where('title', 'like', '%' . $keyword . '%')
                 ->orWhere('content', 'like', '%' . $keyword . '%');
             if ($search->count() == 0) {
-                return redirect()->route('listabout')->with('error', 'Thông tin about bạn cần tìm không tồn tại !');
+                return redirect()->route('listabout')->with('error', 'The information you are looking for does not exist !');
             } else {
-                $about = $search->get();
+                $about = $search->paginate(5);;
                 return view('backend.about.listabout', ['about' => $about]);
             }
         }

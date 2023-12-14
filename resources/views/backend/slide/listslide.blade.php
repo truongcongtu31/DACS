@@ -1,7 +1,7 @@
 @extends('backend.master')
 @section('search')
     <li class="nav-item">
-        <form class="search-form" method="GET" action="{{ route('searchslide') }}">
+        <form class="search-form" method="GET" action=" ">
             <i class="icon-search"></i>
             <input type="search" class="form-control" name="search" placeholder="Search Here" title="Search here">
         </form>
@@ -76,11 +76,10 @@
 
 
                                             </tbody>
+                                               {{ $slide->links() }}
                                         </table>
                                         <br>
-                                        <div class="d-flex justify-content-end">
-                                            {{ $slide->links() }}
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>

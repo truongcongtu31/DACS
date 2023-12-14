@@ -35,7 +35,7 @@ class CategoryController extends Controller
         ];
 
         $this->category->addCategory($data);
-        return redirect()->route('listcategory')->with('success', 'Thêm danh mục sản phẩm thành công');
+        return redirect()->route('listcategory')->with('success', 'Added product categories successfully!');
     }
 
     /**
@@ -71,7 +71,7 @@ class CategoryController extends Controller
 
         ];
         $this->category->updateCategory($dataUpdate, $id);
-        return redirect()->route('listcategory')->with('success', 'Cập nhật danh mục sản phẩm thành công');
+        return redirect()->route('listcategory')->with('success', 'Update product categories successfully');
     }
 
     /**
@@ -81,22 +81,22 @@ class CategoryController extends Controller
     {
         $delete = $this->category->deleteCategory($id);
         if ($delete) {
-            $success = "Xóa danh mục sản phẩm thành công ";
+            $success = "Successfully deleted product category ! ";
         } else {
-            $error = "Xóa danh mục sản phẩm thất bại";
+            $error = "Delete failed product categories!";
         }
-        return redirect()->route('listcategory')->with('success', 'Xóa danh mục sản phẩm thành công ');
+        return redirect()->route('listcategory')->with('success', 'Successfully deleted product category! ');
     }
 
     public function getSearchCategory(Request $request)
     {
         $keyword = $request->input('search');
         if (empty($keyword)) {
-            return redirect()->route('listcategory')->with('error', 'Bạn cần nhập danh mục cần tìm  !');
+            return redirect()->route('listcategory')->with('error', 'Please enter the keyword you are looking for!');
         } else {
             $search = Category::where('name', 'like', '%' . $keyword . '%');
             if ($search->count() == 0) {
-                return redirect()->route('listcategory')->with('error', 'Danh mục sản phẩm bạn cần tìm không tồn tại !');
+                return redirect()->route('listcategory')->with('error', 'The product category you are looking for does not exist !');
             } else {
                 $category = $search->paginate(5);
                 return view('backend.category.listcategory', ['category' => $category]);
