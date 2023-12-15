@@ -136,7 +136,7 @@ class ProductController extends Controller
             if ($search->count() == 0) {
                 return redirect()->route('listproduct')->with('error', 'The product you are looking for does not exist !');
             } else {
-                $products = $search->paginate(5);
+                $products = $search->paginate(8)->withQueryString();
                 return view('backend.product.listproduct', ['product' => $products]);
             }
         }

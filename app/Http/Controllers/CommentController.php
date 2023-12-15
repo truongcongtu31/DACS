@@ -53,7 +53,7 @@ class CommentController extends Controller
             if ($search->count() == 0) {
                 return redirect()->route('listcomment')->with('error', 'The comment you are looking for does not exist!');
             } else {
-                $comments = $search->paginate(5);
+                $comments = $search->paginate(5)->withQueryString();
                 return view('backend.comment.listcomment', ['comment' => $comments]);
             }
         }

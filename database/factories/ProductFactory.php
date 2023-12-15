@@ -38,7 +38,7 @@ class ProductFactory extends Factory
             'image_detail_1' => $detailImagePaths[0],
             'image_detail_2' => $detailImagePaths[1],
             'image_detail_3' => $detailImagePaths[2],
-            'description' => $this->faker->paragraph($nbSentences = 3, $variableNbSentences = true),
+            'description' => $this->faker->paragraph($nbSentences = 2, $variableNbSentences = true),
             'price' => $this->faker->randomFloat(2, 10, 1000),
             'quantity' => $this->faker->randomNumber(2),
             'tag' => $randomTag,

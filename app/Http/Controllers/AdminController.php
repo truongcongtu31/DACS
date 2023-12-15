@@ -19,6 +19,7 @@ class AdminController extends Controller
     //
     public function index()
     {
+        $topBuyer = $this->order->getTopBuyer();
         $data = [
             'orders' => Order::count(),
             'products' => Product::count(),
@@ -44,10 +45,11 @@ class AdminController extends Controller
         $years = [];
         $totalByYear = [];
         $totalByYears = $this->order->getTotalByYear();
+        //dd($totalByMonths, $totalByYears);
         foreach ($totalByYears as $item) {
             $years[] = $item->year;
             $totalByYear[] = $item->total;
         }
-        return view('backend.index', compact('data', 'allMonths', 'totalByMonth', 'years', 'totalByYear'));
+        return view('backend.index', compact('data', 'allMonths', 'totalByMonth', 'years', 'totalByYear', 'topBuyer'));
     }
 }

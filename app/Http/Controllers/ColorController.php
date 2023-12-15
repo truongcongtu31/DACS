@@ -100,7 +100,7 @@ class ColorController extends Controller
             if ($search->count() == 0) {
                 return redirect()->route('listcolor')->with('error', 'The color you are looking for does not exist !');
             } else {
-                $color = $search->paginate(4);
+                $color = $search->paginate(4)->withQueryString();
                 return view('backend.color.listcolor', ['color' => $color]);
             }
         }

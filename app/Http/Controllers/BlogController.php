@@ -43,18 +43,6 @@ class BlogController extends Controller
         return view('frontend.blog-detail', compact('menus', 'blog', 'comments', 'categories', 'products'));
     }
 
-//    public function showBlogDetail(Request $request, $id = 0)
-//    {
-//        if (!empty($id)) {
-//            $blogDetail = $this->blog->getDetail($id);
-//            if (!empty($blogDetail[0])) {
-//                $request->session()->put('id', $id);
-//                return view('frontend.blog-detail', [
-//                    'blogDetail' => $blogDetail,
-//                ]);
-//            }
-//        }
-//    }
 
     public function create()
     {
@@ -111,7 +99,7 @@ class BlogController extends Controller
             if ($search->count() == 0) {
                 return redirect()->route('listblog')->with('error', 'The blog information you are looking for does not exist!!');
             } else {
-                $blog = $search->paginate(3);
+                $blog = $search->paginate(3)->withQueryString();
                 return view('backend.blog.listblog', ['blog' => $blog]);
             }
         }

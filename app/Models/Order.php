@@ -124,6 +124,7 @@ class Order extends Model
     public function getTotalByMonth()
     {
         return Order::where('status', "received")
+            ->whereYear('created_at', '=', Carbon::now()->year)
             ->selectRaw('MONTHNAME(created_at) as month, SUM(total_price) as total')
             ->groupBy('month')
             ->get();
@@ -138,5 +139,14 @@ class Order extends Model
             ->get();
     }
 
+    public function getTopBuyer()
+    {
+        return Order::where("status", 'received')
+            ->selectRaw('user_id , SUM(total_price) as total , COUNT(*) as count_order ',)
+            ->groupBy('user_id')
+            ->orderBy('total', 'desc')
+            ->limit(5)
+            ->get();
+    }
 
 }

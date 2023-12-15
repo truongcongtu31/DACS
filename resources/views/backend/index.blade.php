@@ -62,9 +62,42 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-lg-4 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">TOP BUYER</h4>
+                            <div class="card-body">
+
+                                <div class="mt-3">
+                                    @forelse($topBuyer as $top)
+                                        <div
+                                            class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                            <div class="d-flex">
+                                                <img class="img-sm rounded-10" src="images/avt.jpg"
+                                                     alt="profile">
+                                                <div class="wrapper ms-3">
+                                                    <p class="ms-1 mb-1 fw-bold">{{$top->user->name}}</p>
+                                                    <small class="text-muted mb-0">${{$top->total}}</small>
+                                                </div>
+                                            </div>
+                                            <div class="text-muted text-small">
+                                                Count: {{$top->count_order}}
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <p>No data</p>
+                                    @endforelse
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
+        {{--//TOP--}}
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 

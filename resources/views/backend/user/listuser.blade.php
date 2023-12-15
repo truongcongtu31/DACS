@@ -63,7 +63,7 @@
                                                                 <select
                                                                     style="width: 80px;text-align:center;background: #333;color: #ffffff"
                                                                     class="form-control bg-gray-600"
-                                                                    name="role" >
+                                                                    name="role">
                                                                     <option
                                                                         value="admin" {{$item->role == "admin" ? "selected" : ""}}>
                                                                         Admin

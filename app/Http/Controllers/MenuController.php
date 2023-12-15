@@ -113,7 +113,7 @@ class MenuController extends Controller
             if ($search->count() == 0) {
                 return redirect()->route('listmenu')->with('error', 'The menu you are looking for does not exist !');
             } else {
-                $menu = $search->paginate(5);
+                $menu = $search->paginate(5)->withQueryString();
                 return view('backend.menu.listmenu', ['menu' => $menu]);
             }
         }

@@ -98,7 +98,7 @@ class CategoryController extends Controller
             if ($search->count() == 0) {
                 return redirect()->route('listcategory')->with('error', 'The product category you are looking for does not exist !');
             } else {
-                $category = $search->paginate(5);
+                $category = $search->paginate(5)->withQueryString();
                 return view('backend.category.listcategory', ['category' => $category]);
             }
         }
