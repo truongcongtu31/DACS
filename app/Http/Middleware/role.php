@@ -18,7 +18,7 @@ class role
         if ($request->user()->role === "admin") {
             return $next($request);
         } elseif ($request->user()->role !== $role) {
-            return \response()->view('auth.login');
+            return redirect()->back();
         }
         return $next($request);
     }
