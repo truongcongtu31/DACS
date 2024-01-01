@@ -73,7 +73,7 @@
                                                             @csrf
                                                             <td style="text-align: center">
                                                                 <select
-                                                                    style="width: 80px;background: #333;color: #ffffff"
+                                                                    style="width: 105px;text-align: center;background: #333;color: #ffffff"
                                                                     class="form-control bg-gray-600"
                                                                     name="role">
                                                                     <option
