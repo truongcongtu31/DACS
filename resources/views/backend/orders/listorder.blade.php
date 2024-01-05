@@ -95,7 +95,7 @@
                                                         </form>
 
                                                         <a onclick="return confirm('Do you really want to delete?')"
-                                                           href="{{ route('order.delete', ['id' => $item->id]) }}"
+                                                           href="{{ route('admin.order.delete', ['id' => $item->id]) }}"
                                                            class="btn btn-danger btn-sm"><i
                                                                 class="fas fa-trash"></i>Delete</a>
                                                         </td>

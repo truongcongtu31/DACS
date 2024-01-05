@@ -1,11 +1,12 @@
-@extends('frontend.master')
+@extends('frontend.assets.master')
 @section('header')
     @include('frontend.assets.header')
 @stop
 @section('content')
 
     <!-- Title page -->
-    <section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('../images/banners/banner-03.jpg');">
+    <section class="bg-img1 txt-center p-lr-15 p-tb-92"
+             style="background-image: url('../images/banners/banner-03.jpg');">
         <h2 class="ltext-105 cl0 txt-center">
             About
         </h2>

@@ -55,7 +55,9 @@
                     <ul class="main-menu">
                         @foreach ($menus as $value )
                             <li class="menu">
-                                <a href="{{ route($value['url']) }}">{{ $value['name'] }}</a>
+                                @if(Route::has($value['url']))
+                                    <a href="{{ route($value['url'])  }}">{{ $value['name'] }}</a>
+                                @endif
                             </li>
                         @endforeach
 

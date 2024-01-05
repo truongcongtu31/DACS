@@ -25,7 +25,7 @@ class CartController extends Controller
         $cart = session()->get('cart');
         $total = $this->cart->getToTal();
         $menus = $this->menu->getAllMenu();
-        return view('frontend.cart', compact('cart', 'total', 'menus'));
+        return view('frontend.cart.cart', compact('cart', 'total', 'menus'));
     }
 
     /**
@@ -62,11 +62,15 @@ class CartController extends Controller
         return response()->json(['status' => 200, 'num' => $num]);
     }
 
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function getModalCart()
     {
         $cart = session()->get('cart');
         $total = $this->cart->getToTal();
-        $output = view('frontend.products.modal-cart', compact('cart', 'total'))->render();
+        $output = view('frontend.cart.modal-cart', compact('cart', 'total'))->render();
         return response()->json(['html' => $output]);
     }
 
@@ -85,7 +89,7 @@ class CartController extends Controller
             foreach ($data as $value) {
                 if ($value->quantity < 1) {
                     $total = $this->cart->getToTal();
-                    $output = view('frontend.assets.main-cart', compact('cart', 'total'))->render();
+                    $output = view('frontend.cart.main-cart', compact('cart', 'total'))->render();
                     return response()->json(['status' => 400, 'html' => $output, 'num' => $num]);
                 } else {
                     $product = $this->product->getProductDetails($value->id);
@@ -94,7 +98,7 @@ class CartController extends Controller
                         session()->put('cart', $cart);
                     } else {
                         $total = $this->cart->getToTal();
-                        $output = view('frontend.assets.main-cart', compact('cart', 'total'))->render();
+                        $output = view('frontend.cart.main-cart', compact('cart', 'total'))->render();
                         return response()->json(['status' => 400, 'html' => $output]);
                     }
                 }
@@ -102,7 +106,7 @@ class CartController extends Controller
             $cart = session()->get('cart');
             $num = count($cart);
             $total = $this->cart->getToTal();
-            $output = view('frontend.assets.main-cart', compact('cart', 'total'))->render();
+            $output = view('frontend.cart.main-cart', compact('cart', 'total'))->render();
 
             return response()->json(['status' => 200, 'html' => $output, 'num' => $num]);
         }
@@ -118,69 +122,14 @@ class CartController extends Controller
             $cart = session()->get('cart');
             $num = count($cart);
             $total = $this->cart->getToTal();
-            $output = view('frontend.assets.main-cart', compact('cart', 'total'))->render();
+            $output = view('frontend.cart.main-cart', compact('cart', 'total'))->render();
             return response()->json(['status' => 200, 'html' => $output, 'num' => $num]);
         } else {
             $total = $this->cart->getToTal();
-            $output = view('frontend.assets.main-cart', compact('cart', 'total'))->render();
+            $output = view('frontend.cart.main-cart', compact('cart', 'total'))->render();
             return response()->json(['status' => 400, 'html' => $output, 'num' => $num]);
         }
     }
 
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Cart $cart)
-    {
-        //
-    }
 }

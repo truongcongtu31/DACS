@@ -125,7 +125,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         //admin/order
         Route::prefix('/order')->group(function () {
             Route::post('/update', [OrderController::class, 'update'])->name('order.post-edit');
-            Route::get('/delete/{id}', [OrderController::class, 'destroy'])->name('order.delete');
+            Route::get('/delete/{id}', [OrderController::class, 'destroy'])->name('admin.order.delete');
             Route::get('/list', [OrderController::class, 'show'])->name('listorder');
             Route::get('/searchorder', [OrderController::class, 'getSearchOrder'])->name('searchorder');
         });

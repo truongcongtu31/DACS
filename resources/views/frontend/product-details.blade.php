@@ -1,4 +1,4 @@
-@extends('frontend.master')
+@extends('frontend.assets.master')
 @section('header')
     @include('frontend.assets.header')
 @stop
@@ -81,13 +81,13 @@
                         <span class="mtext-106 cl2">
                             ${{number_format($product->price)}}
                         </span>
-                         <p class="stext-102 cl3 p-t-23">
-                                                    {!! $product->description !!}
+                        <p class="stext-102 cl3 p-t-23">
+                            {!! $product->description !!}
                         </p>
 
-                       <p class="stext-102 cl3 p-t-23" style="text-transform: uppercase">
-                              <b> TAG:  {!! $product->tag !!} </b>
-                       </p>
+                        <p class="stext-102 cl3 p-t-23" style="text-transform: uppercase">
+                            <b> TAG: {!! $product->tag !!} </b>
+                        </p>
 
                         <!--  -->
                         <div class="p-t-33">

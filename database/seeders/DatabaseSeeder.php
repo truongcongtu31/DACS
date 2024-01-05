@@ -5,9 +5,6 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Blog;
 use App\Models\Color;
-use App\Models\Order;
-use App\Models\Product;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,11 +19,11 @@ class DatabaseSeeder extends Seeder
         $this->call(SlideSeeder::class);
         $this->call(BannerSeeder::class);
         $this->call(MenuSeeder::class);
-        User::factory(30)->create();
+        //User::factory(30)->create();
         Color::factory(8)->create();
-        Product::factory(30)->create();
+        //Product::factory(30)->create();
         Blog::factory(10)->create();
-        Order::factory(50)->create();
+        //Order::factory(50)->create();
 
 
         // \App\Models\User::factory()->create([

@@ -1,4 +1,4 @@
-@extends('frontend.master')
+@extends('frontend.assets.master')
 @section('header')
     @include('frontend.assets.header')
 @stop
@@ -67,7 +67,7 @@
                                 </div>
                             @endforeach
 
-                            {{ $blogs->links('frontend.pagination')}}
+                            {{ $blogs->links('frontend.assets.pagination')}}
                         @endif
 
 

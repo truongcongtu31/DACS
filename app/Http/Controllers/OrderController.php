@@ -29,9 +29,9 @@ class OrderController extends Controller
         $menus = $this->menu->getAllMenu();
         if ($request->user() !== null) {
             $orders = $this->order->getOrderByUserId($request->user()->id);
-            return view('frontend.order', compact('menus', 'orders'));
+            return view('frontend.order.order', compact('menus', 'orders'));
         }
-        return view('frontend.order', compact('menus',));
+        return view('frontend.order.order', compact('menus',));
     }
 
     public function addOrder(Request $request)
@@ -54,42 +54,11 @@ class OrderController extends Controller
         return response()->json(['html' => $output]);
     }
 
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show()
     {
         $order = $this->order->getAllOrder();
         return view('backend.orders.listorder', compact('order'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Order $order)
-    {
-        //
     }
 
     /**
@@ -127,27 +96,28 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'Order cancellation failed!');
         }
     }
-    public function getSearchOrder(Request $request){
-    $keyword = $request->input('search');
-    if($keyword ==null){
-    return redirect()->route('listorder')->with('error','Please enter the keyword you want to search for!');
-    }
-    else{
 
-     $search = Order::where(function ($query) use ($keyword) {
-                   $query->whereHas('user', function ($subQuery) use ($keyword) {
-                       $subQuery->where('name', 'like', '%' . $keyword . '%');
-                   })
-     ->orWhere('address', 'like', '%' . $keyword . '%')
-     ->orWhere('phone', 'like', '%' . $keyword . '%')
-      ->orWhere('status', 'like',  $keyword  ); });
-;
-      if ($search->count() == 0) {
-         return redirect()->route('listorder')->with('error', 'The order information you are looking for does not exist!');
-      } else {
-         $order = $search->paginate(8);
-      return view('backend.orders.listorder', ['order' => $order]);
-     }
-    }
+    public function getSearchOrder(Request $request)
+    {
+        $keyword = $request->input('search');
+        if ($keyword == null) {
+            return redirect()->route('listorder')->with('error', 'Please enter the keyword you want to search for!');
+        } else {
+
+            $search = Order::where(function ($query) use ($keyword) {
+                $query->whereHas('user', function ($subQuery) use ($keyword) {
+                    $subQuery->where('name', 'like', '%' . $keyword . '%');
+                })
+                    ->orWhere('address', 'like', '%' . $keyword . '%')
+                    ->orWhere('phone', 'like', '%' . $keyword . '%')
+                    ->orWhere('status', 'like', $keyword);
+            });
+            if ($search->count() == 0) {
+                return redirect()->route('listorder')->with('error', 'The order information you are looking for does not exist!');
+            } else {
+                $order = $search->paginate(8);
+                return view('backend.orders.listorder', ['order' => $order]);
+            }
+        }
     }
 }

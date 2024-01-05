@@ -62,7 +62,7 @@
         var urlCurent = window.location.href;
         $('.category button a').each(function () {
             var urlMenu = $(this).attr("href");
-            if (urlMenu == urlCurent) {
+            if (urlMenu === urlCurent) {
                 $(this).closest('button').addClass('how-active1')
             }
         })
@@ -72,7 +72,7 @@
         var urlCurent = window.location.href;
         $(".main-menu li a").each(function () {
             var urlMenu = $(this).attr("href");
-            if (urlCurent == urlMenu) {
+            if (urlCurent === urlMenu) {
                 $(this).closest('li').addClass('active-menu')
             }
         })

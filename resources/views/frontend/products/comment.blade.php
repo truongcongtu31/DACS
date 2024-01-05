@@ -19,7 +19,7 @@
         </div>
     @endforeach
     <div id="comment-pagination" class="row w-100 d-flex justify-content-center">
-        {{ $comments->appends(request()->all())->links('frontend.pagination') }}
+        {{ $comments->appends(request()->all())->links('frontend.assets.pagination') }}
     </div>
 @endif
 
